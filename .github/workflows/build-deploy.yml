@@ -31,13 +31,7 @@ jobs:
     
     - name: Publish
       run: dotnet publish "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} -p:EnvironmentName=Production --no-build --output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
-    
-    - name: Publish Artifacts
-      uses: actions/upload-artifact@v1.0.0
-      with:
-        name: webapp
-        path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
-    
+      
     - name: Install EF Tool
       run: |
         dotnet new tool-manifest
@@ -48,6 +42,24 @@ jobs:
     
     - name: Generate User scripts
       run: dotnet ef migrations script --output ${{env.WORKING_DIRECTORY}}/sql/sql-scriptb.sql --idempotent --project Holonet.Jedi.Academy.App --context JediAcademyAppUserContext --no-build
+      
+	  - name: Apply Academy EF migration script
+      uses: Azure/sql-action@v1.2
+      with:
+        connection-string: ${{ secrets.AZURE_SQL_CONNECTION_STRING }}
+        sql-file: ${{env.WORKING_DIRECTORY}}/sql/sql-scripta.sql
+        
+    - name: Apply User EF migration script
+      uses: Azure/sql-action@v1.2
+      with:
+        connection-string: ${{ secrets.AZURE_SQL_CONNECTION_STRING }}
+        sql-file: ${{env.WORKING_DIRECTORY}}/sql/sql-scriptb.sql
+	
+    - name: Publish Artifacts
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        name: webapp
+        path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
 
   deploy:
     runs-on: windows-latest
@@ -65,15 +77,3 @@ jobs:
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
         publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
         package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
-    
-    - name: Apply Academy EF migration script
-      uses: Azure/sql-action@v1.2
-      with:
-        connection-string: ${{ secrets.AZURE_SQL_CONNECTION_STRING }}
-        sql-file: ${{env.WORKING_DIRECTORY}}/sql/sql-scripta.sql
-
-    - name: Apply User EF migration script
-      uses: Azure/sql-action@v1.2
-      with:
-        connection-string: ${{ secrets.AZURE_SQL_CONNECTION_STRING }}
-        sql-file: ${{env.WORKING_DIRECTORY}}/sql/sql-scriptb.sql
