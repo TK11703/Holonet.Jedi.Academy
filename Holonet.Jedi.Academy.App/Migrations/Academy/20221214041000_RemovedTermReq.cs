@@ -8,10 +8,10 @@ namespace Holonet.Jedi.Academy.App.Migrations.Academy
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            //migrationBuilder.DropForeignKey(
-            //    name: "FK_Students_TerminationReasons_ReasonForTerminationId",
-            //    schema: "App",
-            //    table: "Students");
+            migrationBuilder.DropForeignKey(
+                name: "FK_Students_TerminationReasons_ReasonForTerminationId",
+                schema: "App",
+                table: "Students");
 
             migrationBuilder.AlterColumn<int>(
                 name: "ReasonForTerminationId",
