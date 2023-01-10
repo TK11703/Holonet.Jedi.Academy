@@ -152,11 +152,7 @@ void ConfigureMiddleware(IApplicationBuilder app, IServiceProvider services)
     app.UseHttpsRedirection();
     app.UseDefaultFiles();
     app.UseStaticFiles();
-    app.UseStaticFiles(new StaticFileOptions //after UseAuthorization() to require authenticated user
-    {
-        FileProvider = new PhysicalFileProvider(Path.Combine(builder.Environment.ContentRootPath, "private-web-assets")),
-        RequestPath = "/private"
-    });
+    
     app.UseCookiePolicy();
     app.UseRouting();
     app.UseAuthentication();

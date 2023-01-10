@@ -45,11 +45,11 @@
 
   <ItemGroup>
     <Folder Include="Pages\Shared\Quests\" />
-    <Folder Include="private-web-assets\css\" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="Pages\Errors\HttpError.cshtml" />
+    <None Include="wwwroot\js\Identity\qr.js" />
   </ItemGroup>
 
 </Project>
