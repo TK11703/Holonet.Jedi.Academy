@@ -1,0 +1,156 @@
+﻿@page
+@model Holonet.Jedi.Academy.App.Pages.Experience.DetailsModel
+
+@{
+	ViewData["Title"] = "Experience Details";
+}
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+	<symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+		<path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+	</symbol>
+	<symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
+		<path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
+	</symbol>
+	<symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+		<path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+	</symbol>
+</svg>
+<h1>@Html.DisplayFor(model => model.Knowledge.Name)</h1>
+<hr />
+<div class="row">
+	<div class="col-6">
+		<div class="card">
+			<div class="card-header">
+				<h5>Basic Information</h5>
+			</div>
+			<div class="card-body">
+				<dl class="row">
+					<dt class="col-sm-3">
+						@Html.DisplayNameFor(model => model.Knowledge.ExperienceToGain)
+					</dt>
+					<dd class="col-sm-9">
+						<span class="badge bg-secondary">+@Html.DisplayFor(model => model.Knowledge.ExperienceToGain)</span> (Currently)
+					</dd>
+					<dt class="col-sm-3">
+						@Html.DisplayNameFor(model => model.Knowledge.Description)
+					</dt>
+					<dd class="col-sm-9">
+						@Html.DisplayFor(model => model.Knowledge.Description)
+					</dd>
+				</dl>
+			</div>
+			<div class="card-footer">
+				@if (Model.CanCreateEdit)
+				{
+					<a asp-page="./Edit" asp-route-id="@Model.Knowledge?.Id" class="btn btn-secondary">Edit</a> <text>|</text>
+				}
+				<a asp-page="./Index">Back to List</a>
+			</div>
+		</div>
+	</div>
+	<div class="col-6">
+		<form method="post" asp-page-handler="completeobjective" asp-route-id="@Model.ID">
+			<div class="card">
+				<div class="card-header">
+					<h5>Availability</h5>
+				</div>
+				<div class="card-body">
+					<div class="row">
+						<div class="col">
+							@if (Model.KnowledgeParticipation != null)
+							{
+								if (Model.KnowledgeParticipation.IsComplete)
+								{
+									<div class="alert alert-success d-flex align-items-center" role="alert">
+										<svg class="bi flex-shrink-0" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill" /></svg>
+										<div class="mx-2 fst-italic small">
+											You completed this experience on @Html.DisplayFor(model => model.KnowledgeParticipation.CompletedOn) and earned <span class="badge bg-secondary">+@Html.DisplayFor(model => model.KnowledgeParticipation.ExperienceToGain)</span> experience.
+										</div>
+									</div>
+								}
+								else
+								{
+									<div class="alert alert-secondary d-flex align-items-center " role="alert">
+										<svg class="bi flex-shrink-0" width="24" height="24" role="img" aria-label="Info:"><use xlink:href="#info-fill" /></svg>
+										<div class="mx-2 fst-italic small">
+											You began this experience on @Html.DisplayFor(model => model.KnowledgeParticipation.StartedOn) and will earn <span class="badge bg-secondary">+@Html.DisplayFor(model => model.KnowledgeParticipation.ExperienceToGain)</span> experience.
+										</div>
+										
+									</div>
+								}
+							}
+							else
+							{
+								if (Model.Knowledge.Archived)
+								{
+									<div class="alert alert-danger d-flex align-items-center" role="alert">
+										<svg class="bi flex-shrink-0" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill" /></svg>
+										<div class="mx-2 fst-italic small">
+											This experience has been archived and is not available for participation.
+										</div>
+									</div>
+								}
+								else if (Model.CanJoin)
+								{
+									<div class="alert alert-primary d-flex align-items-center" role="alert">
+										<svg class="bi flex-shrink-0" width="24" height="24" role="img" aria-label="Info:"><use xlink:href="#info-fill" /></svg>
+										<div class="mx-2 fst-italic small">
+											This experience is available for you begin.
+										</div>
+									</div>
+								}
+							}
+						</div>
+					</div>
+					
+				</div>
+				<div class="card-footer">
+					@if (Model.Knowledge != null && Model.KnowledgeParticipation != null && Model.KnowledgeParticipation.Id > 0 && !Model.KnowledgeParticipation.IsComplete)
+					{
+						<button type="submit" class="btn btn-primary" value="Mark Complete" title="Click to mark the experience complete.">Mark Complete</button>
+					}
+					@if (Model.Knowledge != null && !Model.Knowledge.Archived && Model.KnowledgeParticipation == null && Model.CanJoin)
+					{
+						<button type="submit" asp-page-handler="join" asp-route-id="@Model.ID" class="btn btn-primary" value="Join" title="Click to join this experience.">Join</button>
+					}
+					@if (Model.KnowledgeParticipation != null && !Model.KnowledgeParticipation.IsComplete)
+					{
+						<button type="submit" asp-page-handler="leave" asp-route-id="@Model.ID" class="btn btn-danger" value="Leave" title="Click to leave this experience.">Leave</button>
+					}
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<div class="row my-3">
+	<div class="col-6">
+		<div class="card">
+			<div class="card-header">
+				Participation
+			</div>
+			<div class="card-body">
+				<canvas id="skillParticipation" height="250"></canvas>
+			</div>
+		</div>
+	</div>
+	<div class="col-6">
+		<div class="card">
+			<div class="card-header">
+				Average Time To Complete
+			</div>
+			<div class="card-body text-center">
+				<div id="skillAvgCompletion" class="fs-1">?</div>
+				<div class="text-muted">Rotations</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<input type="hidden" id="knowledgeId" value="@Model.Knowledge?.Id" />
+@section scripts {
+	<script type="text/javascript" src="~/js/date.js"></script>
+	<script type="text/javascript" src="~/lib/chartjs/Chart.js"></script>
+	<script type="text/javascript" src="~/js/chartingDefaults.js" asp-append-version="true"></script>
+	<script type="text/javascript" src="~/js/skills/dashboards.js" asp-append-version="true"></script>
+	<script type="text/javascript" src="~/js/skills/details.js" asp-append-version="true"></script>
+}

@@ -1,0 +1,37 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Holonet.Jedi.Academy.App.Areas.Identity.Data
+@using Holonet.Jedi.Academy.App.Areas.Identity.Enums
+
+@inject SignInManager<JediAcademyAppUser> SignInManager
+@inject UserManager<JediAcademyAppUser> UserManager
+@{
+    JediAcademyAppUser user = UserManager.GetUserAsync(User).Result;
+}
+
+@if (SignInManager.IsSignedIn(User))
+{
+	<li class="nav-item">
+		<a href="#" class="nav-link link-dark text-decoration-none dropdown-toggle" id="accountDropdown" data-bs-toggle="dropdown" aria-expanded="false" title="Click to access your profile menu.">
+			@if (user != null && user.ProfilePicture != null)
+			{
+				<img alt="A user selected profile image" class="rounded-circle" height="24" width="24" src="data:image/*;base64,@(Convert.ToBase64String(UserManager.GetUserAsync(User).Result.ProfilePicture))">
+			}
+			else
+			{
+				<img alt="A user selected profile image" class="rounded-circle" height="24" width="24" src="~/images/icons/profile.png">
+			}
+		</a>
+		<ul class="dropdown-menu dropdown-menu-end text-small shadow" aria-labelledby="accountDropdown">
+			<li><a class="dropdown-item" href="/UserProfile">My Profile</a></li>
+			<li><a class="dropdown-item" href="/Identity/Account/Manage/">My Account</a></li>
+			@if (UserManager.IsInRoleAsync(user, Roles.Administrator.ToString()).Result)
+			{
+				<li><a class="dropdown-item" href="/Identity/UserManager/">User Manager</a></li>
+				<li><a class="dropdown-item" href="/Identity/RoleManager/">Role Manager</a></li>
+			}
+			<li><hr class="dropdown-divider"></li>
+			<li><a class="dropdown-item" href="/Identity/Account/Logout">Sign out</a></li>
+		</ul>
+	</li>
+
+}

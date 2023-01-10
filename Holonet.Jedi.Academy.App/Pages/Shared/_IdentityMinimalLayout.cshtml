@@ -1,0 +1,45 @@
+﻿@using Microsoft.AspNetCore.Hosting
+@using Microsoft.AspNetCore.Mvc.ViewEngines
+@inject IWebHostEnvironment Environment
+@inject ICompositeViewEngine Engine
+@inject Microsoft.Extensions.Options.IOptions<Holonet.Jedi.Academy.Entities.Configuration.SiteConfiguration> Options
+@{
+	var Config = Options.Value;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="author" content="DTSA Apps Team">
+	<link rel="icon" href="/favicon.ico">
+	<title>@Config.ApplicationInformation.ApplicationName - @ViewData["Title"]</title>
+	<link type="text/css" rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link type="text/css" rel="stylesheet" href="~/css/site.css">
+	@RenderSection("header", required: false)
+</head>
+<body>
+
+
+	<main>
+		<div class="container col-xl-10 col-xxl-8 px-4 py-5">
+			<div class="row align-items-center g-lg-5 py-5">
+				<div class="col-lg-6 col-xs-6 text-center text-lg-start">
+					<img class="img-fluid" src="~/images/mainlogo.png" />
+				</div>
+				<div class="col-md-10 mx-auto col-lg-6">
+					@RenderBody()
+				</div>
+			</div>
+		</div>
+	</main>
+
+
+	<script type="text/javascript" src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script type="text/javascript" src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+	@RenderSection("scripts", required: false)
+
+</body>
+</html>

@@ -1,0 +1,48 @@
+﻿@page "{code?}"
+@model Holonet.Jedi.Academy.App.Pages.Errors.HttpErrorModel
+@{
+	ViewData["Title"] = "Error";
+}
+<div class="row justify-content-center">
+	<div class="col-8">
+		<h1>Something Went Wrong</h1>
+		<p class="lead">A problem was detected during the last request to the site. Additional information should be indicated below.</p>
+		<div class="card border-danger mb-3">
+			<div class="card-header">
+				@Model.ErrorStatusCode - The last request to the server was not valid.
+			</div>
+			<div class="card-body">
+				<p class="text-muted wordWrap">
+					<small>Are you sure you typed/used the correct URL? Try that last request again, and if it still doesn't work let us know. You can also visit the homepage and attempt to find the page again.</small>
+				</p>
+			</div>
+		</div>
+		<hr />
+		<div class="">
+			@if (Model.ShowRequestId)
+			{
+				<p>
+					<small><strong>Request ID:</strong> <code>@Model.RequestId</code></small>
+				</p>
+			}
+			@if (Model.ShowOriginalURL)
+			{
+				<p>
+					<small><strong>Requested URL:</strong> <code>@Model.OriginalURL</code></small>
+				</p>
+			}
+		</div>
+		<div class="mt-4">
+			<button class="btn btn-secondary" title="Click to go back" onclick="goBack();">Go Back</button>
+		</div>
+	</div>
+</div>
+
+@section Scripts {
+	<script type="text/javascript">
+		function goBack() {
+			window.history.back();
+		}
+	</script>
+}
+

@@ -1,0 +1,57 @@
+﻿@page
+@model Holonet.Jedi.Academy.App.Pages.SearchModel
+@{
+	ViewData["Title"] = "Search Results";
+}
+<h1>Search Results</h1>
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+	<symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
+		<path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
+	</symbol>
+</svg>
+<div class="alert alert-primary d-flex align-items-center" role="alert">
+	<svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:"><use xlink:href="#info-fill" /></svg>
+	<div class="fst-italic">
+		<strong>You Searched For:</strong> @Model.SearchString
+	</div>
+</div>
+<table class="table">
+	<thead>
+		<tr>
+			<th>
+				<a asp-page="./Search" asp-route-sortOrder="@Model.NameSort" asp-route-search="@Model.SearchString">
+					@Html.DisplayNameFor(model => model.Results[0].Name)
+				</a>
+			</th>
+			<th>
+				<a asp-page="./Search" asp-route-sortOrder="@Model.TypeSort" asp-route-search="@Model.SearchString">
+					@Html.DisplayNameFor(model => model.Results[0].Type)
+				</a>
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model.Results)
+		{
+			<tr>
+				<td>
+					<a href="@item.URL" target="_blank">@Html.DisplayFor(modelItem => item.Name)</a>
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Type)
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>
+@{
+	var prevDisabled = !Model.Results.HasPreviousPage ? "disabled" : "";
+	var nextDisabled = !Model.Results.HasNextPage ? "disabled" : "";
+}
+
+<a asp-page="./Search" asp-route-search="@Model.SearchString" asp-route-sortOrder="@Model.CurrentSort" asp-route-pageIndex="@(Model.Results.PageIndex - 1)" class="btn btn-secondary @prevDisabled">
+	Previous
+</a>
+<a asp-page="./Search" asp-route-search="@Model.SearchString" asp-route-sortOrder="@Model.CurrentSort" asp-route-pageIndex="@(Model.Results.PageIndex + 1)" class="btn btn-secondary @nextDisabled">
+	Next
+</a>

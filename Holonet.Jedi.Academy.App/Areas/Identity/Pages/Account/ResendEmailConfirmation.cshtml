@@ -1,0 +1,25 @@
+﻿@page
+@model ResendEmailConfirmationModel
+@{
+	ViewData["Title"] = "Resend email confirmation";
+	ViewData["PageName"] = "Resend email confirmation";
+	ViewData["PageDescription"] = "Request another password confirmation email be sent to you.";
+	Layout = "/Pages/Shared/_IdentityMinimalLayout.cshtml";
+}
+<form method="post" class="p-4 p-md-5 border rounded-3 bg-light">
+	<h4>Enter your email</h4>
+	<div class="text-muted">An email verification link will be emailed to you.</div>
+	<hr />
+	<div class="mb-3">
+		<label asp-for="Input.Email"></label>
+		<input asp-for="Input.Email" class="form-control" />
+		<span asp-validation-for="Input.Email" class="text-danger"></span>
+	</div>
+	<button type="submit" class="btn btn-primary">Resend</button>
+	<a href="/Identity/Account/Login?ReturnUrl=%2Findex" class="btn btn-secondary btn-sm">Cancel</a>
+	<div asp-validation-summary="All" class="text-danger"></div>
+</form>
+
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+}

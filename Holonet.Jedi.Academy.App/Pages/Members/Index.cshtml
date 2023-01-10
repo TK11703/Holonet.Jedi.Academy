@@ -1,0 +1,188 @@
+﻿@page
+@model Holonet.Jedi.Academy.App.Pages.Members.IndexModel
+
+@{
+	ViewData["Title"] = "Members";
+}
+
+<h1>Members</h1>
+
+<p>
+	<button class="btn btn-secondary btn-sm" type="button" title="Click to view the search/filter options" data-bs-toggle="offcanvas" data-bs-target="#searchFilterOffcanvas" aria-controls="searchFilterOffcanvas">
+		Search/Filter
+	</button>
+	@if (Model.SearchFilterDesc.Count() > 0)
+	{
+		<div id="clearSearchFilterAlert" class="alert alert-primary alert-dismissible fade show" role="alert">
+			@foreach (var filterDescItem in Model.SearchFilterDesc)
+			{
+				<span class="px-2">@Html.Raw(filterDescItem)</span>
+
+			}
+			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+		</div>
+	}
+</p>
+@if (Model.CanCreateEdit)
+{
+	<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+		<symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
+			<path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
+		</symbol>
+	</svg>
+	<div class="alert alert-primary d-flex align-items-center" role="alert">
+		<svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:"><use xlink:href="#info-fill" /></svg>
+		<div class="fst-italic text-muted">
+			You are currently signed in as an instructor or administrator with edit permissions on these items.
+		</div>
+	</div>
+}
+<table class="table">
+	<thead>
+		<tr>
+			<th>
+				@Html.DisplayNameFor(model => model.Students[0].FirstName)
+			</th>
+			<th>
+				<a asp-page="./Index" asp-route-sortOrder="@Model.NameSort" asp-route-nameFilter="@Model.NameFilter" asp-route-rankFilter="@Model.RankFilter" asp-route-speciesFilter="@Model.RankFilter" asp-route-planetFilter="@Model.PlanetFilter">
+					@Html.DisplayNameFor(model => model.Students[0].LastName)
+				</a>
+			</th>
+			<th>
+				<a asp-page="./Index" asp-route-sortOrder="@Model.SpeciesSort" asp-route-nameFilter="@Model.NameFilter" asp-route-rankFilter="@Model.RankFilter" asp-route-speciesFilter="@Model.RankFilter" asp-route-planetFilter="@Model.PlanetFilter">
+					@Html.DisplayNameFor(model => model.Students[0].Species)
+				</a>
+			</th>
+			<th>
+				<a asp-page="./Index" asp-route-sortOrder="@Model.PlanetSort" asp-route-nameFilter="@Model.NameFilter" asp-route-rankFilter="@Model.RankFilter" asp-route-speciesFilter="@Model.RankFilter" asp-route-planetFilter="@Model.PlanetFilter">
+					@Html.DisplayNameFor(model => model.Students[0].Planet)
+				</a>
+			</th>
+			<th>
+				<a asp-page="./Index" asp-route-sortOrder="@Model.RankSort" asp-route-nameFilter="@Model.NameFilter" asp-route-rankFilter="@Model.RankFilter" asp-route-speciesFilter="@Model.RankFilter" asp-route-planetFilter="@Model.PlanetFilter">
+					@Html.DisplayNameFor(model => model.Students[0].Rank)
+				</a>
+			</th>
+			<th>
+				<a asp-page="./Index" asp-route-sortOrder="@Model.ExpSort" asp-route-nameFilter="@Model.NameFilter" asp-route-rankFilter="@Model.RankFilter" asp-route-speciesFilter="@Model.RankFilter" asp-route-planetFilter="@Model.PlanetFilter">
+					@Html.DisplayNameFor(model => model.Students[0].Experience)
+				</a>
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Students[0].InitiatedOn)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Students[0].LeftOn)
+			</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model.Students)
+		{
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.FirstName)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.LastName)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Species.Name)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Planet.Name)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Rank.Name)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Experience)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.InitiatedOn)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.LeftOn)
+				</td>
+				<td>
+					<div class="dropdown">
+						<a class="btn btn-secondary btn-sm dropdown-toggle" href="#" role="button" id="actionLink_@item.Id" data-bs-toggle="dropdown" aria-expanded="false">
+							Actions
+						</a>
+
+						<ul class="dropdown-menu" aria-labelledby="actionLink_@item.Id">
+							<li><a class="dropdown-item" asp-page="./Details" asp-route-id="@item.Id">Details</a></li>
+							@if (Model.CanCreateEdit)
+							{
+								<li><a class="dropdown-item" asp-page="./Edit" asp-route-id="@item.Id">Edit</a></li>
+								<li><a class="dropdown-item" asp-page="./Delete" asp-route-id="@item.Id">Delete</a></li>
+							}
+						</ul>
+					</div>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>
+@{
+	var prevDisabled = !Model.Students.HasPreviousPage ? "disabled" : "";
+	var nextDisabled = !Model.Students.HasNextPage ? "disabled" : "";
+}
+
+<a asp-page="./Index"
+   asp-route-sortOrder="@Model.CurrentSort"
+   asp-route-pageIndex="@(Model.Students.PageIndex - 1)"
+   asp-route-nameFilter="@Model.NameFilter" asp-route-rankFilter="@Model.RankFilter" asp-route-speciesFilter="@Model.RankFilter" asp-route-planetFilter="@Model.PlanetFilter"
+   class="btn btn-secondary @prevDisabled">
+	Previous
+</a>
+<a asp-page="./Index"
+   asp-route-sortOrder="@Model.CurrentSort"
+   asp-route-pageIndex="@(Model.Students.PageIndex + 1)"
+   asp-route-nameFilter="@Model.NameFilter" asp-route-rankFilter="@Model.RankFilter" asp-route-speciesFilter="@Model.RankFilter" asp-route-planetFilter="@Model.PlanetFilter"
+   class="btn btn-secondary @nextDisabled">
+	Next
+</a>
+
+<div class="offcanvas offcanvas-start" tabindex="-1" id="searchFilterOffcanvas" aria-labelledby="searchFilterOffcanvasLabel">
+	<div class="offcanvas-header">
+		<h5 class="offcanvas-title" id="searchFilterOffcanvasLabel">Search/Filter Options</h5>
+		<button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+	</div>
+	<div class="offcanvas-body">
+		<form asp-page="./Index" method="get">
+			<div class="mb-3">
+				<label for="exampleFormControlInput1" class="form-label">Find by name:</label>
+				<input type="text" class="form-control" id="nameFilter" name="SearchnameFilterString" value="@Model.NameFilter">
+			</div>
+			<div class="mb-3">
+				<label for="RankFilter" class="form-label">Select a Rank:</label>
+				<select id="RankFilter" name="RankFilter" class="form-select" asp-items="ViewBag.Ranks">
+					<option value="">Select a rank</option>
+				</select>
+			</div>
+			<div class="mb-3">
+				<label for="PlanetFilter" class="form-label">Select a Planet:</label>
+				<select id="PlanetFilter" name="PlanetFilter" class="form-select" asp-items="ViewBag.Planets">
+					<option value="">Select a planet</option>
+				</select>
+			</div>
+			<div class="mb-3">
+				<label for="SpeciesFilter" class="form-label">Select a Species:</label>
+				<select id="SpeciesFilter" name="SpeciesFilter" class="form-select" asp-items="ViewBag.Species">
+					<option value="">Select a species</option>
+				</select>
+			</div>
+			<hr class="mt-5" />
+			<div class="mb-3">
+				<input type="submit" value="Search" class="btn btn-primary btn-sm" title="Click to execute the search/filter request" />
+				<a asp-page="./Index" class="btn btn-primary btn-sm" title="Click to clear the search/filter options">Clear</a>
+			</div>
+		</form>
+	</div>
+</div>
+
+@section Scripts {
+	<script type="text/javascript" src="~/js/Students/index.js" asp-append-version="true"></script>
+}

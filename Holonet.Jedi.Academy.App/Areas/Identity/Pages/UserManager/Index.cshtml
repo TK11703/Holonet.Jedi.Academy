@@ -1,0 +1,85 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "User Listing";
+    ViewData["PageName"] = "User Listing";
+    ViewData["PageDescription"] = "Review the user information and associated roles.";
+    Layout = "_Layout.cshtml";
+}
+@inject UserManager<JediAcademyAppUser> UserManager
+@{
+    JediAcademyAppUser me = UserManager.GetUserAsync(User).Result;
+}
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Locked</th>
+                    <th>Roles</th>
+                    <th class="text-center">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model.RoleCollection)
+                {
+                    <tr>
+                        <td>@user.FirstName</td>
+                        <td>@user.LastName</td>
+                        <td>@user.Email</td>
+                        <td class="text-center">
+                            @if (user.IsLocked)
+                            {
+                                <form method="post">
+                                    <input type="hidden" name="userId" value="@user.UserId" />
+                                    <button type="submit" title="Click to unlock this user." class="btn btn-sm btn-secondary" asp-route-userid="@user.UserId" asp-page-handler="UnlockUser">
+                                        <i class="fas fa-lock"></i>
+                                    </button>
+                                </form>
+                            }
+                            else
+                            {
+                                <i class="fas fa-lock-open"></i>
+                            }
+                        </td>
+                        <td>@string.Join(", ", user.Roles.ToList())</td>
+                        <td class="text-center">
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <a class="btn btn-primary btn-sm" href="/Identity/UserManager/User?id=@user.UserId" title="Click to add/remove user roles for this user."><i class="fas fa-user-tag"></i></a>
+                                @if (me.Id != user.UserId)
+                                {
+                                    <form method="post">
+                                        <input type="hidden" name="userId" value="@user.UserId" />
+                                        <button type="submit" title="Click to delete this user." class="btn btn-sm btn-danger deleteUser" data-username="@user.LastName, @user.FirstName" asp-route-userid="@user.UserId">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('button.deleteUser').click(function(e) {
+                e.preventDefault();
+                var btn = $(this);
+                siteConfirm("Are you sure that you wish to delete the user '" + $(btn).data("username") + "?", null, null, function(result) {
+                    if (result) {
+                        $(btn).closest("form").submit();
+                    }
+
+                });
+            });
+        });
+    </script>
+}

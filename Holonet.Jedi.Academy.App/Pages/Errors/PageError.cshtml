@@ -1,0 +1,43 @@
+﻿@page
+@model Holonet.Jedi.Academy.App.Pages.Errors.PageErrorModel
+@{
+	ViewData["Title"] = "Error";
+}
+<div class="row justify-content-center">
+	<div class="col-8">
+		<h1>Something Went Wrong</h1>
+		<p class="lead">A problem was detected during the last request to the site. Additional information should be indicated below.</p>
+		<div class="card border-danger mb-3">
+			<div class="card-body">
+				@if (Model.ShowErrorDetails)
+				{
+					<p class="text-muted wordWrap">@Html.Raw(@Model.ErrorDetails)</p>
+				}
+				@if (Model.ShowRequestDetails)
+				{
+					<p class="text-muted wordWrap"><small>@Html.Raw(@Model.RequestDetails)</small></p>
+				}
+			</div>
+		</div>
+		<hr />
+		<div>
+			@if (Model.ShowRequestId)
+			{
+				<p>
+					<small><strong>Request ID:</strong> <code>@Model.RequestId</code></small>
+				</p>
+			}
+		</div>
+		<div class="mt-4">
+			<button class="btn btn-secondary" title="Click to go back" onclick="goBack();">Go Back</button>
+		</div>
+	</div>
+</div>
+
+@section Scripts {
+	<script type="text/javascript">
+		function goBack() {
+			window.history.back();
+		}
+	</script>
+}

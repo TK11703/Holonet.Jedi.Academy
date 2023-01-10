@@ -1,0 +1,61 @@
+﻿@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Log in";
+    ViewData["PageName"] = "Log in";
+    ViewData["PageDescription"] = "Please log into your account to access the resources.";
+    Layout = "/Pages/Shared/_IdentityMinimalLayout.cshtml";
+}
+<form id="account" method="post" class="p-4 p-md-5 border rounded-3 bg-light">
+    <h4>Verify your access</h4>
+    <hr />
+    <div class="mb-3 text-left">
+        <label asp-for="Input.Email"></label>
+        <input asp-for="Input.Email" class="form-control" />
+        <span asp-validation-for="Input.Email" class="text-danger"></span>
+    </div>
+    <div class="mb-3 text-left">
+        <label asp-for="Input.Password"></label>
+        <input asp-for="Input.Password" class="form-control" />
+        <span asp-validation-for="Input.Password" class="text-danger"></span>
+    </div>
+    <div class="mb-3 d-flex justify-content-between align-items-baseline">
+        <div class="checkbox">
+            <label asp-for="Input.RememberMe">
+                <input asp-for="Input.RememberMe" />
+                @Html.DisplayNameFor(m => m.Input.RememberMe)
+            </label>
+        </div>
+        <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+    </div>
+    <div class="row">
+        <div class="col-5">
+            <div class="mb-3">
+                <button id="loginButton" type="submit" class="btn btn-primary">Log in</button>
+            </div>
+        </div>
+        <div class="col-7 text-end">
+            <div class="mb-3">
+                <p>
+                    <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
+                    <br />
+                    <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div asp-validation-summary="All" class="text-danger"></div>
+</form>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script type="text/javascript">
+        $("#account").submit(function(e) {
+            if ($('#account').valid()) {
+                $("#loginButton").text("Loading...").prepend("<span class=\"spinner-grow spinner-grow-sm me-2\"></span>").addClass("disabled").prop("disabled", true);
+            }
+        });
+    </script>
+}

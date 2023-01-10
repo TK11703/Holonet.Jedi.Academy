@@ -1,0 +1,182 @@
+﻿@page
+@model Holonet.Jedi.Academy.App.Pages.UserProfileModel
+
+@{
+	ViewData["Title"] = "User Profile";
+}
+<div class="d-flex align-items-center justify-content-between">
+	<h1>User Profile</h1>
+	<div class="fs-1 ms-auto">
+		@if (Model.RewardPoints != null && Model.RewardPoints.Count > 0)
+		{
+			<a id="newSkillSelector" href="javascript:void(0);" class="position-relative" title="Click to select a new skill!" data-bs-toggle="modal" data-bs-target="#skillSelectionModal">
+				<i class="fas fa-star"></i>
+				<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger fs-6">
+					@Model.RewardPointOutput
+					<span class="visually-hidden">reward points</span>
+				</span>
+			</a>
+		}
+		else
+		{
+			<a href="javascript:void(0);" class="disabled link-secondary" role="button" aria-disabled="true">
+				<i class="fas fa-star"></i>
+			</a>
+		}
+	</div>
+</div>
+
+<hr />
+<div class="row">
+	<div class="col-md-4">
+		<form method="post">
+			<div class="card">
+				<div class="card-header">
+					<h5>Personal Information</h5>
+				</div>
+				<div class="card-body">
+					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+					<input type="hidden" asp-for="UserProfile.Id" />
+					<input type="hidden" asp-for="UserProfile.UserId" />
+					<div class="mb-3">
+						<label asp-for="UserProfile.FirstName" class="control-label"></label>
+						<input asp-for="UserProfile.FirstName" class="form-control" readonly />
+						<span asp-validation-for="UserProfile.FirstName" class="text-danger"></span>
+					</div>
+					<div class="mb-3">
+						<label asp-for="UserProfile.LastName" class="control-label"></label>
+						<input asp-for="UserProfile.LastName" class="form-control" readonly />
+						<span asp-validation-for="UserProfile.LastName" class="text-danger"></span>
+					</div>
+					<div class="mb-3">
+						<label asp-for="UserProfile.SpeciesId" class="control-label"></label>
+						<select asp-for="UserProfile.SpeciesId" class="form-select" asp-items="ViewBag.Species">
+							<option value="">Select a species</option>
+						</select>
+						<span asp-validation-for="UserProfile.SpeciesId" class="text-danger"></span>
+					</div>
+					<div class="mb-3">
+						<label asp-for="UserProfile.PlanetId" class="control-label"></label>
+						<select asp-for="UserProfile.PlanetId" class="form-select" asp-items="ViewBag.Planets">
+							<option value="">Select a planet</option>
+						</select>
+						<span asp-validation-for="UserProfile.PlanetId" class="text-danger"></span>
+					</div>
+				</div>
+				<div class="card-footer">
+					<button type="submit" class="btn btn-primary">@Model.ButtonAction</button>
+				</div>
+			</div>
+		</form>
+		<h1><i class="far fa-star"></i></h1>
+	</div>
+	<div class="col-md-7 offset-md-1">
+		<div class="card">
+			<div class="card-header">
+				<ul class="nav nav-tabs card-header-tabs" id="profileTabs" role="tablist">
+					<li class="nav-item" role="presentation">
+						<button class="nav-link active" id="quests-tab" data-bs-toggle="tab" data-bs-target="#quests" type="button" role="tab" aria-controls="quests" aria-selected="true">Quests</button>
+					</li>
+					<li class="nav-item" role="presentation">
+						<button class="nav-link" id="skills-tab" data-bs-toggle="tab" data-bs-target="#skills" type="button" role="tab" aria-controls="skills" aria-selected="false">Experience (Skills)</button>
+					</li>
+					<li class="nav-item" role="presentation">
+						<button class="nav-link" id="powers-tab" data-bs-toggle="tab" data-bs-target="#powers" type="button" role="tab" aria-controls="powers" aria-selected="false">Force Powers</button>
+					</li>
+				</ul>
+			</div>
+			<div class="card-body">
+				<div class="tab-content" id="profileTabsContent">
+					<div class="tab-pane fade show active" id="quests" role="tabpanel" aria-labelledby="quests-tab">
+						<div class="list-group">
+							@foreach (var item in Model.PersonalQuests)
+							{
+								<a href="/Quests/Details?id=@item.Quest.Id" class="list-group-item list-group-item-action" aria-current="true">
+									<div class="d-flex w-100 justify-content-between">
+										<div><h5 class="mb-1">@item.Quest.Name</h5></div>
+										<div>
+											@if (item.IsComplete)
+											{
+												<span class="badge rounded-pill bg-success">@item.Status</span>
+											}
+											else
+											{
+												<span class="badge rounded-pill bg-warning text-dark">@item.Status</span>
+											}
+										</div>
+									</div>
+									<p class="mb-1">@item.Quest.ShortDescription</p>
+									@foreach (var dest in item.Quest.DestinationPlanets())
+									{
+										<span class="badge bg-secondary">@Html.Raw(dest.Name)</span>
+									}
+
+								</a>
+							}
+						</div>
+					</div>
+					<div class="tab-pane fade" id="skills" role="tabpanel" aria-labelledby="skills-tab">
+						<div class="list-group">
+							@foreach (var item in Model.PersonalSkills)
+							{
+								<a href="/Skills/Details?id=@item.Knowledge.Id" class="list-group-item list-group-item-action" aria-current="true">
+									<div class="d-flex w-100 justify-content-between">
+										<h5 class="mb-1">@item.Knowledge.Name</h5>
+										<small>@item.Status</small>
+									</div>
+									<p class="mb-1">@item.Knowledge.Description</p>
+								</a>
+							}
+						</div>
+					</div>
+					<div class="tab-pane fade" id="powers" role="tabpanel" aria-labelledby="powers-tab">
+						<div class="list-group">
+							@foreach (var item in Model.ForcePowers)
+							{
+								<a href="/References/ForcePowers/Details?id=@item.ForcePower.Id" class="list-group-item list-group-item-action" aria-current="true">
+									<div class="d-flex align-items-center justify-content-between">
+										<h5 class="mb-1">@item.ForcePower.Name</h5>
+										<div class="ms-auto">Gained On: <span class="badge bg-secondary">@Html.DisplayFor(modelItem=>item.GainedOn)</span></div>
+									</div>
+									<div class="text-muted">@item.ForcePower.Description</div>
+								</a>
+							}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="skillSelectionModal" tabindex="-1" aria-labelledby="skillSelectionModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form method="post" asp-page-handler="newskill" asp-route-studentId="@Model.StudentId">
+				<div class="modal-header">
+					<h5 class="modal-title" id="skillSelectionModalLabel">New Skill Selection</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div class="mb-3">
+						<label asp-for="SelectedForcePowerId" class="control-label"></label>
+						<select asp-for="SelectedForcePowerId" class="form-select" asp-items="ViewBag.ForcePowers">
+							<option value="">Select a power to learn</option>
+						</select>
+						<span asp-validation-for="SelectedForcePowerId" class="text-danger"></span>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					<button type="submit" class="btn btn-primary">Select</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+	<script type="text/javascript" src="~/js/UserProfile.js" asp-append-version="true"></script>
+}

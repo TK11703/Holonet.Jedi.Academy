@@ -1,0 +1,67 @@
+﻿@page
+@model Holonet.Jedi.Academy.App.Pages.Quests.IndexModel
+
+@{
+	ViewData["Title"] = "Quests";
+}
+
+<h1>Quests</h1>
+<p>
+	<a asp-page="Create" class="btn btn-primary btn-sm" title="Click to create a new item">Create New</a>
+	<button class="btn btn-secondary btn-sm" type="button" title="Click to view the search/filter options" data-bs-toggle="offcanvas" data-bs-target="#searchFilterOffcanvas" aria-controls="searchFilterOffcanvas">
+		Search/Filter
+	</button>
+</p>
+@if (Model.CanCreateEdit)
+{
+	<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+		<symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
+			<path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
+		</symbol>
+	</svg>
+	<div class="alert alert-primary d-flex align-items-center" role="alert">
+		<svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:"><use xlink:href="#info-fill" /></svg>
+		<div class="fst-italic text-muted">
+			You are currently signed in as an instructor or administrator with edit permissions on these items.
+		</div>
+	</div>
+}
+<div id="questMasonry" class="row"></div>
+
+<div class="offcanvas offcanvas-start" tabindex="-1" id="searchFilterOffcanvas" aria-labelledby="searchFilterOffcanvasLabel">
+	<div class="offcanvas-header">
+		<h5 class="offcanvas-title" id="searchFilterOffcanvasLabel">Search/Filter Options</h5>
+		<button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+	</div>
+	<div class="offcanvas-body">
+		<div class="mb-3">
+			<label for="TextFilter" class="form-label">Find in name/description:</label>
+			<input type="text" class="form-control" id="TextFilter" name="TextFilter" />
+		</div>
+		<div class="mb-3">
+			<label for="RankFilter" class="form-label">By Rank:</label>
+			<select id="RankFilter" name="RankFilter" class="form-select" asp-items="ViewBag.Ranks">
+				<option value="">Select a rank</option>
+			</select>
+		</div>
+		<div class="mb-3">
+			<label for="CompletedFilter" class="form-label">By Completion Status:</label>
+			<select id="CompletedFilter" name="CompletedFilter" class="form-select">
+				<option value="">All</option>
+				<option value="0">Not Completed</option>
+				<option value="1">Completed</option>
+			</select>
+		</div>
+		<hr class="mt-5" />
+		<div class="mb-3">
+			<input id="applyFilter" type="button" value="Search" class="btn btn-primary btn-sm" title="Click to execute the search/filter request" />
+			<input id="clearFilter" type="button" value="Clear" class="btn btn-primary btn-sm" title="Click to clear the search/filter options" />
+		</div>
+	</div>
+</div>
+
+@section Scripts {
+	<script type="text/javascript" src="~/lib/masonry/masonry.pkgd.min.js" asp-append-version="true"></script>
+	<script type="text/javascript" src="~/js/InfinityScroll.js" asp-append-version="true"></script>
+	<script type="text/javascript" src="~/js/Quests/index.js" asp-append-version="true"></script>
+	}

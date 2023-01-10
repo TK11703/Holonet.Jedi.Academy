@@ -1,0 +1,16 @@
+dotnet ef migrations add MigrationName --namespace=MyProject.MobileAppService.Migrations.Development --output-dir Migrations/Development --context ContextName
+
+Add-Migration InitialCreate -context AcademyContext -outputdir Migrations/Academy
+Update-Database -context AcademyContext
+Drop-Database -context AcademyContext
+
+
+Add-Migration InitialCreate -context JediAcademyAppUserContext -outputdir Migrations/AppUser
+Update-Database -context JediAcademyAppUserContext
+Drop-Database -context JediAcademyAppUserContext
+
+
+--removes the last migration in the migrations folder
+Remove-Migration -context AcademyContext
+--removes the last migration in the DB
+Update-Database -context AcademyContext

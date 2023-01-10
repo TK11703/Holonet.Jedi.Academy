@@ -1,0 +1,10 @@
+﻿@page
+@model LockoutModel
+@{
+	ViewData["Title"] = "Locked out";
+	ViewData["PageName"] = "Locked out";
+	ViewData["PageDescription"] = "Account locked out due to too many invalid login attempts.";
+	Layout = "/Pages/Shared/_IdentityMinimalLayout.cshtml";
+}
+<p class="text-danger">This account has been locked out, please try again later.</p>
+<a href="/Identity/Account/Login?ReturnUrl=%2Findex" class="btn btn-primary">Login</a>

@@ -1,0 +1,30 @@
+﻿@using Microsoft.AspNetCore.Mvc.ViewEngines
+@inject ICompositeViewEngine Engine
+@{
+    if (ViewData.TryGetValue("ParentLayout", out var parentLayout))
+    {
+        Layout = (string)parentLayout;
+    }
+    else
+    {
+        Layout = "/Pages/Shared/_IdentityLayout.cshtml";
+    }
+}
+
+<div class="page-header">
+    <p class="lead">Account Management - @ViewData["PageName"]</p>
+    <p>@ViewData["PageDescription"]</p>
+</div>
+<div class="row">
+    <div class="col-md-3">
+        <partial name="_ManageNav" />
+    </div>
+    <div class="col-md-9">
+        @RenderBody()
+    </div>
+</div>
+
+
+@section Scripts {
+    @RenderSection("Scripts", required: false)
+}

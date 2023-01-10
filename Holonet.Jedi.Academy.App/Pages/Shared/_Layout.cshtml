@@ -1,0 +1,107 @@
+﻿@using Microsoft.AspNetCore.Hosting
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Mvc.ViewEngines
+@using Holonet.Jedi.Academy.App.Areas.Identity.Data
+@using Holonet.Jedi.Academy.App.Areas.Identity.Enums
+@inject IWebHostEnvironment Environment
+@inject ICompositeViewEngine Engine
+@inject Microsoft.Extensions.Options.IOptions<Holonet.Jedi.Academy.Entities.Configuration.SiteConfiguration> Options
+@inject UserManager<JediAcademyAppUser> UserManager
+@{
+	var Config = Options.Value;
+	JediAcademyAppUser user = UserManager.GetUserAsync(User).Result;
+}
+
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="author" content="DTSA Apps Team">
+	<link rel="icon" href="/favicon.ico">
+	<title>@Config.ApplicationInformation.ApplicationName - @ViewData["Title"]</title>
+	<link type="text/css" rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link type="text/css" rel="stylesheet" href="~/lib/plugins/toastr/toastr.css" />
+	<link type="text/css" rel="stylesheet" href="~/css/site.css">
+	@RenderSection("header", required: false)
+</head>
+<body class="d-flex flex-column h-100">
+	<nav class="py-2 bg-light border-bottom">
+		<div class="container d-flex flex-wrap">
+			<ul class="nav me-auto">
+				<li class="nav-item"><a href="/Members" class="nav-link link-dark px-2">Members</a></li>
+				<li class="nav-item"><a href="/Quests" class="nav-link link-dark px-2">Quests</a></li>
+				<li class="nav-item"><a href="/Experience" class="nav-link link-dark px-2">Experience</a></li>
+				<li class="nav-item"><a href="/FAQs" class="nav-link link-dark px-2">FAQs</a></li>
+				<li class="nav-item"><a href="/About" class="nav-link link-dark px-2">About</a></li>
+				@if (UserManager.IsInRoleAsync(user, Roles.Administrator.ToString()).Result)
+				{
+					<li class="nav-item dropdown">
+						<a href="#" class="nav-link dropdown-toggle link-dark px-2" id="referencesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">References</a>
+						<ul class="dropdown-menu" aria-labelledby="referencesDropdown">
+							<li><a class="dropdown-item" href="/References/">All</a></li>
+							<li><a class="dropdown-item" href="/References/AlienRaces/">Alien Races</a></li>
+							<li><a class="dropdown-item" href="/References/ForcePowers/">Force Powers</a></li>
+							<li><a class="dropdown-item" href="/References/QuestObjectives/">Quest Objectives</a></li>
+							<li><a class="dropdown-item" href="/References/Planets/">Planets</a></li>
+							<li><a class="dropdown-item" href="/References/Ranks/">Ranks</a></li>							
+							<li><a class="dropdown-item" href="/References/TerminationReasons/">Termination Reasons</a></li>
+						</ul>	
+					</li>
+				}
+			</ul>
+			<ul class="nav">
+				@{
+					var result = Engine.FindView(ViewContext, "_LoginPartial", isMainPage: false);
+				}
+				@if (result.Success)
+				{
+					await Html.RenderPartialAsync("_LoginPartial");
+				}
+			</ul>
+		</div>
+	</nav>
+	<header class="py-3 mb-4 border-bottom">
+		<div class="container d-flex flex-wrap justify-content-center">
+			<a href="/Home" class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none">
+				<img class="img-fluid me-2" src="~/images/mainlogo.png" height="48" width="48" />
+				<span class="fs-4">@Config.ApplicationInformation.ApplicationName</span>
+			</a>
+			<form id="searchForm" action="/Search" method="get" class="col-12 col-lg-auto mb-3 mb-lg-0">
+				<input type="search" name="search" class="form-control" placeholder="Search..." aria-label="Search">
+				@Html.AntiForgeryToken()
+			</form>
+		</div>
+	</header>
+	<main class="flex-shrink-0 pb-5">
+		<div class="container">
+			@RenderBody()
+		</div>
+	</main>
+	<footer class="bg-light mt-auto">
+		<div class="divider"></div>
+		<div class="container py-3">
+			<ul class="nav justify-content-center border-bottom pb-3 mb-3">
+				<li class="nav-item"><a href="/Home" class="nav-link px-2 text-muted">Home</a></li>
+				<li class="nav-item"><a href="/Members" class="nav-link px-2 text-muted">Members</a></li>
+				<li class="nav-item"><a href="/Quests" class="nav-link px-2 text-muted">Quests</a></li>
+				<li class="nav-item"><a href="/Experience" class="nav-link px-2 text-muted">Experience</a></li>
+				<li class="nav-item"><a href="/FAQs" class="nav-link px-2 text-muted">FAQs</a></li>
+				<li class="nav-item"><a href="/About" class="nav-link px-2 text-muted">About</a></li>
+			</ul>
+			<p class="text-center text-muted">2022 @Config.ApplicationInformation.ApplicationName</p>
+		</div>
+	</footer>
+
+	<script type="text/javascript" defer src="~/lib/fontawesome/v5/js/solid.min.js"></script>
+	<script type="text/javascript" defer src="~/lib/fontawesome/v5/js/fontawesome.min.js"></script>
+	<script type="text/javascript" src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script type="text/javascript" src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script type="text/javascript" src="~/lib/plugins/bootbox/bootbox.min.js"></script>
+	<script type="text/javascript" src="~/lib/plugins/toastr/toastr.min.js"></script>
+	<script type="text/javascript" src="~/js/global.js" asp-append-version="true"></script>
+	<script type="text/javascript" src="~/js/site.js" asp-append-version="true"></script>
+	@RenderSection("scripts", required: false)
+</body>
+</html>

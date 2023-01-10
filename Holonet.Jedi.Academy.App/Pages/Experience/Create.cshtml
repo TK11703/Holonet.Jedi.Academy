@@ -1,0 +1,48 @@
+﻿@page
+@model Holonet.Jedi.Academy.App.Pages.Experience.CreateModel
+
+@{
+	ViewData["Title"] = "Create Experience";
+}
+
+<h1>Create A New Experience</h1>
+<hr />
+<div class="row">
+	<div class="col-md-6">
+		<form method="post">
+			<div class="card">
+				<div class="card-body">
+					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+					<div class="mb-3">
+						<label asp-for="Knowledge.Name" class="control-label"></label>
+						<input asp-for="Knowledge.Name" class="form-control" />
+						<span asp-validation-for="Knowledge.Name" class="text-danger"></span>
+					</div>
+					<div class="mb-3">
+						<label asp-for="Knowledge.ExperienceToGain" class="control-label"></label>
+						<input asp-for="Knowledge.ExperienceToGain" class="form-control" />
+						<span asp-validation-for="Knowledge.ExperienceToGain" class="text-danger"></span>
+					</div>
+					<div class="mb-3">
+						<label asp-for="Knowledge.Description" class="control-label"></label>
+						<textarea asp-for="Knowledge.Description" class="form-control"></textarea>
+						<span asp-validation-for="Knowledge.Description" class="text-danger"></span>
+					</div>
+				</div>
+				<div class="card-footer">
+					@if (Model.CanCreateEdit)
+					{
+						<input type="submit" value="Create" class="btn btn-primary" /> <text>|</text>
+					}
+					<a asp-page="Index">Back to List</a>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+}

@@ -1,0 +1,27 @@
+﻿@page
+@model ViewRolesModel
+@{
+    ViewData["Title"] = "Assigned Roles";
+    ViewData["ActivePage"] = ManageNavPages.ViewRoles;
+    ViewData["PageName"] = "Assigned Roles";
+    ViewData["PageDescription"] = "Review the roles currently assigned to your profile.";
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                @for (int i = 0; i < Model.UserRoleAssignments.Count; i++)
+                {
+                    <div class="form-check m-1">
+                        <input type="hidden" asp-for="@Model.UserRoleAssignments[i].RoleId" />
+                        <input type="hidden" asp-for="@Model.UserRoleAssignments[i].RoleName" />
+                        <input asp-for="@Model.UserRoleAssignments[i].Selected" class="form-check-input" disabled="disabled" />
+                        <label class="form-check-label" asp-for="@Model.UserRoleAssignments[i].Selected">
+                            @Model.UserRoleAssignments[i].RoleName
+                        </label>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,98 @@
+﻿@page
+@model Holonet.Jedi.Academy.App.Pages.References.AlienRaces.IndexModel
+@{
+	ViewData["Title"] = "Alien Races";
+}
+
+<h1>Alien Races</h1>
+<hr />
+<p>
+	@if (Model.CanCreateEdit)
+	{
+		<a class="btn btn-primary btn-sm" asp-page="Index" title="Click to create a new item.">Create New</a>
+	}
+</p>
+<div class="row">
+	<div class="col-5">
+		<div class="card">
+			<div class="card-header">
+				<h5>Listing</h5>
+			</div>
+			<div class="list-group list-group-flush">
+				@foreach (var item in Model.AlienRaces)
+				{
+					<a href="/References/AlienRaces/Index?id=@item.Id" class="list-group-item list-group-item-action @(item.Id.Equals(Model.ID) ? "active":"")" title="Click to view the details." aria-current="true">
+						<div class="d-flex w-100 justify-content-between">
+							<span class="fs-6">@Html.DisplayFor(modelItem => item.Name)</span>
+							@if (item.Archived)
+							{
+								<span class="badge bg-danger">Archived</span>
+							}
+							else
+							{
+								<span class="badge bg-success">Active</span>
+							}
+						</div>
+					</a>
+				}
+			</div>
+		</div>
+	</div>
+	<div class="col-5 offset-2">
+		<form method="post">
+			<div class="card">
+				<div class="card-header">
+					<h5>Details</h5>
+				</div>
+				<div class="card-body">
+					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+					@if (Model.AlienRace != null && Model.AlienRace.Id > 0)
+					{
+						<input type="hidden" asp-for="AlienRace.Id" />
+					}
+					<div class="mb-3">
+						<label asp-for="AlienRace.Name" class="control-label"></label>
+						@if (Model.CanCreateEdit)
+						{
+							<input asp-for="AlienRace.Name" class="form-control" />
+						}
+						else
+						{
+							<input asp-for="AlienRace.Name" class="form-control-plaintext" readonly />
+						}
+						<span asp-validation-for="AlienRace.Name" class="text-danger"></span>
+					</div>
+					<div class="mb-3">
+						<p class="fst-italic">Archived items are retained, but they are no longer actionable or listed.</p>
+						<div class="form-check">
+							@if (Model.CanCreateEdit)
+							{
+								<input asp-for="AlienRace.Archived" type="checkbox" class="form-check-input" />
+							}
+							else
+							{
+								<input asp-for="AlienRace.Archived" type="checkbox" class="form-check-input" readonly />
+							}
+
+							<label asp-for="AlienRace.Archived" class="form-check-label"></label>
+						</div>
+						<span asp-validation-for="AlienRace.Archived" class="text-danger"></span>
+					</div>
+				</div>
+				<div class="card-footer">
+					@if (Model.CanCreateEdit)
+					{
+						<input type="submit" value="Save" class="btn btn-success" />
+					}
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+	<script type="text/javascript" src="~/js/References/AlienRaces/index.js" asp-append-version="true"></script>
+}

@@ -1,0 +1,15 @@
+﻿@page
+@model AccessDeniedModel
+@{
+	ViewData["Title"] = "Access denied";
+	ViewData["PageName"] = "Access denied";
+	ViewData["PageDescription"] = "You do not have access to this resource.";
+	Layout = "/Pages/Shared/_IdentityMinimalLayout.cshtml";
+}
+
+<h4>Resource Access Issue Detected</h4>
+<p class="text-danger">This account does not currently have permission to access this resource. Please try again later or request permission.</p>
+<form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="/Identity/Account/Login?ReturnUrl=%2Findex" method="post">
+	<button id="logout" type="submit" class="btn btn-primary" title="Click to sign out of this account">Log Out</button>
+	<a href="/Index" class="btn btn-secondary btn-sm">Cancel</a>
+</form>

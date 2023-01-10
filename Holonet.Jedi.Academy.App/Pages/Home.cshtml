@@ -1,0 +1,89 @@
+﻿@page
+@model HomeModel
+@{
+	ViewData["Title"] = "Home";
+}
+
+<div id="homeCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#homeCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#homeCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#homeCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        <button type="button" data-bs-target="#homeCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
+    </div>
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="~/images/carousel/temple1.jpg" class="bd-placeholder-img img-fluid" />
+            <div class="container">
+                <div class="carousel-caption text-start">
+                    <h1>Areas of strong Force presence.</h1>
+                    <p>Bogano was home to a great Vault built by the ancient Zeffo civilization. </p>
+                    <p><a class="btn btn-lg btn-primary" target="_blank" href="https://starwars.fandom.com/wiki/Bogano#SnippetTab">Learn More</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-item ">
+            <img src="~/images/carousel/temple2.png" class="bd-placeholder-img img-fluid" />
+            <div class="container">
+                <div class="carousel-caption text-start">
+                    <h1>Jedi Temple Guards</h1>
+                    <p>Armed with yellow plasma blades, the guards served under the head of security.</p>
+                    <p><a class="btn btn-lg btn-primary" target="_blank" href="https://starwars.fandom.com/wiki/Jedi_Temple_Guard">Learn More</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="~/images/carousel/temple3.jpg" class="bd-placeholder-img img-fluid" />
+            <div class="container">
+                <div class="carousel-caption text-start">
+                    <h1>Je'daii Temples.</h1>
+                    <p>Nine temples were constructed on Tython, for the nine members of the order.</p>
+                    <p><a class="btn btn-lg btn-primary" target="_blank" href="https://starwars.fandom.com/wiki/Je%27daii_Temples">Learn More</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="~/images/carousel/temple4.jpg" class="bd-placeholder-img img-fluid" />
+            <div class="container">
+                <div class="carousel-caption text-start">
+                    <h1>The meaning of meditation.</h1>
+                    <p>Meditation is about more than just forging a deeper connection to the Force…</p>
+                    <p><a class="btn btn-lg btn-primary" target="_blank" href="https://starwars.fandom.com/wiki/Meditation">Learn More</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#homeCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#homeCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+
+<section class="text-center container">
+	<div class="row py-lg-5">
+		<div class="col-6">
+			<h1 class="fw-light">"May The Force Be With You!"</h1>
+			<p class="lead text-muted">So, the Jedi are Force users united in our quest to understand the mysteries of the Force and to serve as guardians of peace and justice throughout the galaxy. […] we ground ourselves in a spiritual existence and give up individual attachments in order to focus entirely on greater concerns.</p>
+		</div>
+        <div class="col-6">
+            <h1 class="fw-light">"I am one with the Force..."</h1>
+            <p class="lead text-muted">...and the Force is with me. It’s an energy field created by all living things. It surrounds us and penetrates us; it binds the galaxy together.</p>
+        </div>
+	</div>
+	
+</section>
+<input type="hidden" id="isProfileComplete" asp-for="@Model.CompleteProfile" />
+<input type="hidden" id="profileIssues" asp-for="@Model.ProfileIssuesJSON" />
+
+@section header {
+	
+	<link type="text/css" rel="stylesheet" href="~/css/home.css">
+}
+
+@section scripts {
+	<script type="text/javascript" src="~/js/home.js" asp-append-version="true"></script>
+}

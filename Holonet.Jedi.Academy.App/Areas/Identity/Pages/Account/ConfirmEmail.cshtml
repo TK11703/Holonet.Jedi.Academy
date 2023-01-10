@@ -1,0 +1,10 @@
+﻿@page
+@model ConfirmEmailModel
+@{
+    ViewData["Title"] = "Confirm email";
+    ViewData["PageName"] = "Confirm email";
+    ViewData["PageDescription"] = "Email confirmation has been received.";
+    Layout = "/Pages/Shared/_IdentityMinimalLayout.cshtml";
+}
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+<a href="/Identity/Account/Login?ReturnUrl=%2Findex" class="btn btn-secondary btn-sm">Login</a>

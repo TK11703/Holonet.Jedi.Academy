@@ -1,0 +1,55 @@
+﻿@page
+@model Holonet.Jedi.Academy.App.Areas.Identity.Pages.RoleManager.IndexModel
+@{
+    ViewData["Title"] = "Role Listing";
+    ViewData["PageName"] = "Role Listing";
+    ViewData["PageDescription"] = "Review the roles available for the user accounts.";
+    Layout = "_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-striped">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th class="text-center">Update</th>
+                <th class="text-center">Delete</th>
+            </tr>
+            @foreach (var role in Model.Roles)
+            {
+                <tr>
+                    <td>@role.Id</td>
+                    <td>@role.Name</td>
+                    <td class="text-center"><a class="btn btn-sm btn-primary" href="/Identity/RoleManager/Role?id=@role.Id">Edit</a></td>
+                    <td class="text-center">
+                        <form method="post">
+                            <input type="hidden" name="roleId" value="@role.Id" />
+                            <button type="submit" class="btn btn-sm btn-danger deleteRole" data-rolename="@role.Name"  asp-route-roleid="@role.Id">
+                                Delete
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </table>
+        <a href="/Identity/RoleManager/Role?id=-1" class="btn btn-secondary">Create a Role</a>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('button.deleteRole').click(function(e) {
+                e.preventDefault();
+                var btn = $(this);
+                siteConfirm("Are you sure that you wish to delete the role '" + $(btn).data("rolename") + "?\nThe role and user memberships to the role will be removed.", null, null, function(result) {
+                    if (result) {
+                        $(btn).closest("form").submit();
+                    }
+
+                });
+            });
+        });
+    </script>
+}

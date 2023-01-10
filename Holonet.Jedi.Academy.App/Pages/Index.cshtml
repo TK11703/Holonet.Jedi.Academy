@@ -1,0 +1,55 @@
+﻿@page
+@model IndexModel
+@inject Microsoft.Extensions.Options.IOptions<Holonet.Jedi.Academy.Entities.Configuration.SiteConfiguration> Options
+@{
+	var appName = Options.Value.ApplicationInformation.ApplicationName;
+}
+@{
+	ViewData["Title"] = "Disclaimer";
+	Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+<head runat="server">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+	<meta name="description" content="">
+	<meta name="author" content="Holonet CSAs">
+	<link rel="icon" href="/favicon.ico">
+	<title>@appName - @ViewData["Title"]</title>
+	<link type="text/css" rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link type="text/css" rel="stylesheet" href="~/css/index.css">
+
+</head>
+<body class="d-flex text-center flex-column h-100">
+	<main class="h-100">
+		<div class="container mt-5">
+			<h1 class="text-center">@appName - Disclaimer</h1>
+			<hr class="mt-5 mb-3" />
+			<p>@appName is in no way affiliated with or endorsed by Lucasfilm Limited or any of its subsidiaries, employees, or associates. @appName offers no suggestion that the work presented on this web page is "official" or produced or sanctioned by the owner or any licensees of the aforementioned trademarks. @appName will take all steps necessary to ensure that any usage of trademarked items in no way confuses the audience of this site as to its origin. @appName makes no claim to own Star Wars or any of the copyrights or trademarks related to it. Images that are displayed on this site are copyrighted to Lucasfilm Limited or another partner of Lucas Licensing, or to the creator of the image.</p>
+			<p>The content licensing of this website does NOT apply to the original works and trademarked names! The Star Wars titles and associated names are the sole property of Lucasfilm Limited. The administrators of @appName believe that the operation of this website falls under the definition of "fair use" under United States copyright laws.</p>
+			<hr class="mt-3 mb-5" />
+			<p class="text-center">
+				<a id="acceptButton" href="javascript:void(0);" class="btn btn-primary">Accept</a>
+			</p>
+		</div>
+	</main>
+
+	<footer class="footer mt-auto py-3 bg-light">
+		<div class="container">
+			<span class="text-muted">A school system for Jedi Academy members, sponsored by the Holonet.</span>
+		</div>
+	</footer>
+	<script type="text/javascript" defer src="~/lib/fontawesome/v5/js/solid.min.js"></script>
+	<script type="text/javascript" defer src="~/lib/fontawesome/v5/js/fontawesome.min.js"></script>
+	<script type="text/javascript" src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script type="text/javascript" src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script type="text/javascript" src="~/lib/plugins/bootbox/bootbox.min.js"></script>
+	<script type="text/javascript" src="~/lib/plugins/toastr/toastr.min.js"></script>
+	<script type="text/javascript" src="~/js/global.js" asp-append-version="true"></script>
+	<script type="text/javascript" src="~/js/index.js" asp-append-version="true"></script>
+</body>
+</html>

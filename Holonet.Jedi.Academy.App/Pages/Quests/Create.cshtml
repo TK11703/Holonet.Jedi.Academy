@@ -1,0 +1,88 @@
+﻿@page
+@model Holonet.Jedi.Academy.App.Pages.Quests.CreateModel
+
+@{
+	ViewData["Title"] = "Create Quest";
+}
+
+<h1>Create A New Quest</h1>
+<hr />
+<div class="row">
+	<div class="col-md-6">
+		<form method="post">
+			<div class="card">
+				<div class="card-body">
+					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+					<div class="mb-3">
+						<label asp-for="Quest.Name" class="control-label"></label>
+						<input asp-for="Quest.Name" class="form-control" />
+						<span asp-validation-for="Quest.Name" class="text-danger"></span>
+					</div>
+					<div class="mb-3">
+						<label asp-for="Quest.ExperienceToGain" class="control-label"></label>
+						<input asp-for="Quest.ExperienceToGain" class="form-control" />
+						<span asp-validation-for="Quest.ExperienceToGain" class="text-danger"></span>
+					</div>
+					<div class="mb-3">
+						<label asp-for="Quest.RankId" class="control-label"></label>
+						<select asp-for="Quest.RankId" class="form-select" asp-items="ViewBag.Ranks">
+							<option value="">Select a rank</option>
+						</select>
+						<span asp-validation-for="Quest.RankId" class="text-danger"></span>
+					</div>
+					<div class="mb-3">
+						<label asp-for="Quest.Description" class="control-label"></label>
+						<textarea asp-for="Quest.Description" class="form-control"></textarea>
+						<span asp-validation-for="Quest.Description" class="text-danger"></span>
+					</div>
+				</div>
+				<div class="card-footer">
+					<input type="submit" value="Create" class="btn btn-primary" /> |
+					<a asp-page="Index">Back to List</a>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="col-md-3">
+		<div class="card my-3">
+			<div class="card-header">
+				New Quests Today
+			</div>
+			<div class="card-body text-center">
+				<div class="fs-1">@Model.NewQuestsToday</div>
+			</div>
+		</div>
+		<div class="card my-3">
+			<div class="card-header">
+				Most Popular Quest Planet
+			</div>
+			<div class="card-body text-center">
+				<div class="fs-1">@Model.MostPopularPlanet</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-3">
+		<div class="card my-3">
+			<div class="card-header">
+				Quests Completed Today
+			</div>
+			<div class="card-body text-center">
+				<div class="fs-1">@Model.QuestsCompletedToday</div>
+			</div>
+		</div>
+		<div class="card my-3">
+			<div class="card-header">
+				Average Quest Completion
+			</div>
+			<div class="card-body text-center">
+				<div class="fs-1">@Model.AvgCompletionTime</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+}

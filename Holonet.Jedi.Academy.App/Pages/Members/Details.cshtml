@@ -1,0 +1,164 @@
+﻿@page
+@model Holonet.Jedi.Academy.App.Pages.Members.DetailsModel
+
+@{
+	ViewData["Title"] = "Member Details";
+}
+
+<h1>Member Details</h1>
+<hr />
+<div class="row">
+	<div class="col">
+		<div class="card">
+			<div class="card-body">
+				<dl class="row">
+					<dt class="col-sm-3">
+						@Html.DisplayNameFor(model => model.Student.FirstName)
+					</dt>
+					<dd class="col-sm-9">
+						@Html.DisplayFor(model => model.Student.FirstName)
+					</dd>
+					<dt class="col-sm-3">
+						@Html.DisplayNameFor(model => model.Student.LastName)
+					</dt>
+					<dd class="col-sm-9">
+						@Html.DisplayFor(model => model.Student.LastName)
+					</dd>
+					<dt class="col-sm-3">
+						@Html.DisplayNameFor(model => model.Student.Species)
+					</dt>
+					<dd class="col-sm-9">
+						@Html.DisplayFor(model => model.Student.Species.Name)
+					</dd>
+					<dt class="col-sm-3">
+						@Html.DisplayNameFor(model => model.Student.Planet)
+					</dt>
+					<dd class="col-sm-9">
+						@Html.DisplayFor(model => model.Student.Planet.Name)
+					</dd>
+					<dt class="col-sm-3">
+						@Html.DisplayNameFor(model => model.Student.InitiatedOn)
+					</dt>
+					<dd class="col-sm-9">
+						@Html.DisplayFor(model => model.Student.InitiatedOn)
+					</dd>
+					@if (Model.Student.LeftOn.HasValue)
+					{
+						<dt class="col-sm-3">
+							@Html.DisplayNameFor(model => model.Student.LeftOn)
+						</dt>
+						<dd class="col-sm-9">
+							@Html.DisplayFor(model => model.Student.LeftOn)
+						</dd>
+					}
+					@if (Model.Student.ReasonForTermination != null)
+					{
+						<dt class="col-sm-3">
+							@Html.DisplayNameFor(model => model.Student.ReasonForTermination)
+						</dt>
+						<dd class="col-sm-9">
+							@Html.DisplayFor(model => model.Student.ReasonForTermination.Name)
+						</dd>
+					}
+					<dt class="col-sm-3">
+						@Html.DisplayNameFor(model => model.Student.Rank)
+					</dt>
+					<dd class="col-sm-9">
+						@Html.DisplayFor(model => model.Student.Rank.Name)
+					</dd>
+					<dt class="col-sm-3">
+						@Html.DisplayNameFor(model => model.Student.Experience)
+					</dt>
+					<dd class="col-sm-9">
+						@Html.DisplayFor(model => model.Student.Experience)
+					</dd>
+				</dl>
+			</div>
+			<div class="card-footer">
+				@if(Model.CanCreateEdit)
+				{
+					<a asp-page="./Edit" asp-route-id="@Model.Student?.Id" class="btn btn-secondary">Edit</a> <text>|</text>
+				}
+				<a asp-page="./Index">Back to List</a>
+			</div>
+		</div>
+
+	</div>
+	<div class="col">
+		<div class="card">
+			<div class="card-header">
+				<ul class="nav nav-tabs card-header-tabs" id="profileTabs" role="tablist">
+					<li class="nav-item" role="presentation">
+						<button class="nav-link active" id="quests-tab" data-bs-toggle="tab" data-bs-target="#quests" type="button" role="tab" aria-controls="quests" aria-selected="true">Quests</button>
+					</li>
+					<li class="nav-item" role="presentation">
+						<button class="nav-link" id="skills-tab" data-bs-toggle="tab" data-bs-target="#skills" type="button" role="tab" aria-controls="skills" aria-selected="false">Experience (Skills)</button>
+					</li>
+					<li class="nav-item" role="presentation">
+						<button class="nav-link" id="powers-tab" data-bs-toggle="tab" data-bs-target="#powers" type="button" role="tab" aria-controls="powers" aria-selected="false">Force Powers</button>
+					</li>
+				</ul>
+			</div>
+			<div class="card-body">				
+				<div class="tab-content" id="profileTabsContent">
+					<div class="tab-pane fade show active" id="quests" role="tabpanel" aria-labelledby="quests-tab">
+						<div class="list-group">
+							@foreach (var item in Model.PersonalQuests)
+							{
+								<a href="javascript:void(0);" class="list-group-item list-group-item-action" aria-current="true">
+									<div class="d-flex w-100 justify-content-between">
+										<div><h5 class="mb-1">@item.Quest.Name</h5></div>
+										<div>
+											@if (item.IsComplete)
+											{
+												<span class="badge rounded-pill bg-success">@item.Status</span>
+											}
+											else
+											{
+												<span class="badge rounded-pill bg-warning text-dark">@item.Status</span>
+											}
+										</div>
+									</div>
+									<p class="mb-1">@item.Quest.ShortDescription</p>
+									@foreach (var dest in item.Quest.DestinationPlanets())
+									{
+										<span class="badge bg-secondary">@Html.Raw(dest.Name)</span>
+									}
+
+								</a>
+							}
+						</div>
+					</div>
+					<div class="tab-pane fade" id="skills" role="tabpanel" aria-labelledby="skills-tab">
+						<div class="list-group">
+							@foreach (var item in Model.PersonalSkills)
+							{
+								<a href="javascript:void(0);" class="list-group-item list-group-item-action" aria-current="true">
+									<div class="d-flex w-100 justify-content-between">
+										<h5 class="mb-1">@item.Knowledge.Name</h5>
+										<small>@item.Status</small>
+									</div>
+									<p class="mb-1">@item.Knowledge.Description</p>
+								</a>
+							}
+						</div>
+					</div>
+					<div class="tab-pane fade" id="powers" role="tabpanel" aria-labelledby="powers-tab">
+						<div class="list-group">
+							@foreach (var item in Model.ForcePowers)
+							{
+								<a href="javascript:void(0);" class="list-group-item list-group-item-action" aria-current="true">
+									<div class="d-flex align-items-center justify-content-between">
+										<h5 class="mb-1">@item.ForcePower.Name</h5>
+										<div class="ms-auto">Gained On: <span class="badge bg-secondary">@Html.DisplayFor(modelItem=>item.GainedOn)</span></div>
+									</div>
+									<div class="text-muted">@item.ForcePower.Description</div>
+								</a>
+							}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,28 @@
+﻿@model string
+
+@if (!String.IsNullOrEmpty(Model))
+{
+    if (Model.StartsWith("Error"))
+    {
+        <script type="text/javascript">
+            window.addEventListener("load", function() {
+                showPermanentErrorToast("System Notification", "@Model");
+            });
+        </script>
+    }
+    else
+    {
+        <script type="text/javascript">
+            window.addEventListener("load", function() {
+                showPermanentInformationToast("System Notification", "@Model");
+            });
+        </script>
+    }
+
+
+    @*var statusMessageClass = Model.StartsWith("Error") ? "danger" : "success";
+    <div class="alert alert-@statusMessageClass alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        @Model
+    </div>*@
+}

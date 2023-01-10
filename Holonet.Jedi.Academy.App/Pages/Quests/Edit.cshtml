@@ -1,0 +1,126 @@
+﻿@page
+@model Holonet.Jedi.Academy.App.Pages.Quests.EditModel
+
+@{
+	ViewData["Title"] = "Edit Quest";
+}
+
+<h1>Edit an Existing Quest</h1>
+<hr />
+<form method="post">
+	<div class="row">
+		<div class="col-md-6">
+			<div class="card">
+				<div class="card-header">
+					<ul class="nav nav-tabs card-header-tabs" id="questTabs" role="tablist">
+						<li class="nav-item" role="presentation">
+							<button class="nav-link active" id="details-tab" data-bs-toggle="tab" data-bs-target="#details" type="button" role="tab" aria-controls="details" aria-selected="true">Details</button>
+						</li>
+						<li class="nav-item" role="presentation">
+							<button class="nav-link" id="objectives-tab" data-bs-toggle="tab" data-bs-target="#objectives" type="button" role="tab" aria-controls="objectives" aria-selected="false">Objectives</button>
+						</li>
+					</ul>
+				</div>
+				<div class="card-body">
+					<div class="tab-content" id="questTabsContent">
+						<div class="tab-pane fade show active" id="details" role="tabpanel" aria-labelledby="details-tab">
+							<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+							<input type="hidden" asp-for="Quest.Id" />
+							<div class="mb-3">
+								<label asp-for="Quest.Name" class="control-label"></label>
+								<input asp-for="Quest.Name" class="form-control" />
+								<span asp-validation-for="Quest.Name" class="text-danger"></span>
+							</div>
+							<div class="mb-3">
+								<label asp-for="Quest.ExperienceToGain" class="control-label"></label>
+								<input asp-for="Quest.ExperienceToGain" class="form-control" />
+								<span asp-validation-for="Quest.ExperienceToGain" class="text-danger"></span>
+							</div>
+							<div class="mb-3">
+								<label asp-for="Quest.RankId" class="control-label"></label>
+								<select asp-for="Quest.RankId" class="form-select" asp-items="ViewBag.Ranks">
+									<option value="">Select a rank</option>
+								</select>
+								<span asp-validation-for="Quest.RankId" class="text-danger"></span>
+							</div>
+							<div class="mb-3">
+								<label asp-for="Quest.Description" class="control-label"></label>
+								<textarea asp-for="Quest.Description" class="form-control"></textarea>
+								<span asp-validation-for="Quest.Description" class="text-danger"></span>
+							</div>
+							<p class="fst-italic">Archived items are retained, but they are no longer actionable or listed.</p>
+							<div class="mb-3">
+								<div class="form-check">
+									<input asp-for="Quest.Archived" type="checkbox" class="form-check-input" />
+									<label asp-for="Quest.Archived" class="form-check-label"></label>
+								</div>
+								<span asp-validation-for="Quest.Archived" class="text-danger"></span>
+							</div>
+							<input type="hidden" id="questId" value="@Model.Quest?.Id" />
+						</div>
+						<div class="tab-pane fade" id="objectives" role="tabpanel" aria-labelledby="objectives-tab">
+							<h4>Add Objectives To The Quest</h4>
+							<div>
+								<label asp-for="QuestDomain.Objectives" class="control-label"></label>
+								<select id="objectiveList" class="form-select" asp-items="ViewBag.Objectives">
+									<option value="">Select an objective</option>
+								</select>
+							</div>
+							<div class="mb-3">
+								<a href="/References/QuestObjectives/" target="_blank" title="Click to access existing objectives and add new ones.">Missing an objective?</a>
+							</div>
+							<h5>Objectives Currently In This Quest</h5>
+							<div id="selectedObjectives" class="list-group mb-4">
+								@if (Model.QuestDomain != null && Model.QuestDomain.Objectives != null && Model.QuestDomain.Objectives.Count > 0)
+								{
+									foreach (var questObj in Model.QuestDomain.Objectives)
+									{
+										<label class="list-group-item d-flex gap-3" data-objectiveid="@questObj.Objective.Id">
+											<input class="form-check-input flex-shrink-0" type="checkbox" value="" data-objectiveid="@questObj.Objective.Id" style="font-size: 1.375em;">
+											<span class="pt-1 form-checked-content">
+												<strong>@questObj.Objective.Name</strong>
+												<small class="d-block text-muted">
+													@questObj.Objective.Description
+												</small>
+											</span>
+										</label>
+									}
+								}
+								else
+								{
+									<div class="alert alert-warning" role="alert">
+										There are currently no objectives assigned to this quest.
+									</div>
+								}
+							</div>
+							@if (Model.QuestDomain != null && Model.QuestDomain.Objectives != null && Model.QuestDomain.Objectives.Count > 0)
+							{
+								<button type="button" id="removeObjectives" class="btn btn-danger" title="Remove the selected objectives from the quest.">Remove</button>
+							}
+							else
+							{
+								<button type="button" id="removeObjectives" class="btn btn-danger" title="Remove the selected objectives from the quest." disabled>Remove</button>
+							}
+							<div id="selectedIdCollection">
+								@foreach (int selectedObjId in Model.SelectedObjectiveIds)
+								{
+									<input type="hidden" name="SelectedObjectiveIds" value="@selectedObjId" />
+								}
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="card-footer">
+					<input type="submit" value="Update" class="btn btn-primary" /> |
+					<a asp-page="./Index">Back to List</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+	<script type="text/javascript" src="~/js/Quests/common.js" asp-append-version="true"></script>
+}

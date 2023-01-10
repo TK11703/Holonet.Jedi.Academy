@@ -1,0 +1,22 @@
+﻿@page
+@model LogoutModel
+@{
+	ViewData["Title"] = "Log out";
+	ViewData["PageName"] = "Log out";
+	ViewData["PageDescription"] = "Logout the current user.";
+	Layout = "/Pages/Shared/_IdentityMinimalLayout.cshtml";
+}
+@{
+	if (User.Identity.IsAuthenticated)
+	{
+		<p>You will be logged out of the system, after clicking on the button below.</p>
+		<form class="" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/home", new { area = "" })" method="post">
+			<button type="submit" class="btn btn-danger">Logout</button>
+		</form>
+	}
+	else
+	{
+		<p>You have successfully logged out of the application.</p>
+		<p><a href="/Identity/Account/Login?ReturnUrl=%2Findex" class="btn btn-primary" title="Click to login again">Login</a></p>
+	}
+}

@@ -1,0 +1,34 @@
+﻿@model IEnumerable<Holonet.Jedi.Academy.Entities.App.Quest>
+
+@foreach (var item in Model)
+{
+	<div class="col-sm-6 col-lg-4 mb-4">
+		<div class="card shadow-sm @((item.HasUserCompleted)?"border-success":"")">
+			<div class="card-body">
+				<h5 class="card-title"><a asp-page="/Quests/Details" asp-route-id="@item.Id" title="Click to view this quest">@Html.DisplayFor(modelItem => item.Name)</a></h5>
+				<p>
+				<p>@Html.DisplayFor(modelItem => item.ShortDescription)</p>
+				</p>
+				<div class="d-flex justify-content-between align-items-center">
+					<div>Minimum Rank: <span class="badge bg-secondary">@Html.DisplayFor(modelItem => item.Rank.Name)</span></div>
+					<div>Exp: <span class="badge bg-secondary">+@Html.DisplayFor(modelItem => item.ExperienceToGain)</span></div>
+					@if (item.HasUserCompleted)
+					{
+						<div title="Quest has been completed!">Status: <i class="fas fa-check-circle text-success"></i></div>
+					}
+					else
+					{
+						<div title="Quest status is unnknown at this time.">Status: <i class="fas fa-question-circle"></i></div>
+					}
+				</div>
+			</div>
+			@if (item.CanUserCreateEdit)
+			{
+				<div class="card-footer text-center">
+					<a class="btn btn-secondary btn-sm" asp-page="/Quests/Edit" asp-route-id="@item.Id">Edit</a>
+					<a class="btn btn-danger btn-sm" asp-page="/Quests/Delete" asp-route-id="@item.Id">Delete</a>
+				</div>
+			}
+		</div>
+	</div>
+}

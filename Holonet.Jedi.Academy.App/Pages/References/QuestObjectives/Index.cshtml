@@ -1,0 +1,180 @@
+﻿@page
+@model Holonet.Jedi.Academy.App.Pages.References.QuestObjectives.IndexModel
+@{
+	ViewData["Title"] = "Quest Objectives";
+}
+
+<h1>Quest Objectives</h1>
+<hr />
+<p>
+	@if (Model.CanCreateEdit)
+	{
+		<a class="btn btn-primary btn-sm" asp-page="Index" title="Click to create a new item.">Create New</a>
+	}
+	<button class="btn btn-secondary btn-sm" type="button" title="Click to view the search/filter options" data-bs-toggle="offcanvas" data-bs-target="#searchFilterOffcanvas" aria-controls="searchFilterOffcanvas">
+		Search/Filter
+	</button>
+</p>
+<div class="row">
+	<div class="col-6">
+		<div class="card">
+			<div class="card-header">
+				<h5>Listing</h5>
+			</div>
+			<div class="card-body">
+				<table class="table table-striped table-hover">
+					<thead>
+						<tr>
+							<th>
+								<a asp-page="./Index" asp-route-id="@Model.ID" asp-route-sortOrder="@Model.CurrentSort" asp-route-pageIndex="@Model.QuestObjectives.PageIndex" asp-route-searchString="@Model.SearchString">
+									@Html.DisplayNameFor(model => model.QuestObjectives[0].Name)
+								</a>
+							</th>
+							<th>
+								@Html.DisplayNameFor(model => model.QuestObjectives[0].Description)
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach (var item in Model.QuestObjectives)
+						{
+							<tr class="@((item.Archived)? "fst-italic":"") @((item.Id.Equals(Model.ID))? "table-primary":"") ">
+								<td>
+									<a href="/References/QuestObjectives/Index?id=@item.Id">@Html.DisplayFor(modelItem => item.Name)</a>
+								</td>
+								<td>
+									@Html.DisplayFor(modelItem => item.Description)
+								</td>
+							</tr>
+						}
+					</tbody>
+				</table>
+				@{
+					var prevDisabled = !Model.QuestObjectives.HasPreviousPage ? "disabled" : "";
+					var nextDisabled = !Model.QuestObjectives.HasNextPage ? "disabled" : "";
+				}
+
+				<a asp-page="./Index"
+				   asp-route-id="@Model.ID"
+				   asp-route-sortOrder="@Model.CurrentSort"
+				   asp-route-pageIndex="@(Model.QuestObjectives.PageIndex - 1)"
+				   asp-route-searchString="@Model.SearchString"
+				   class="btn btn-secondary @prevDisabled">
+					Previous
+				</a>
+				<a asp-page="./Index"
+				   asp-route-id="@Model.ID"
+				   asp-route-sortOrder="@Model.CurrentSort"
+				   asp-route-pageIndex="@(Model.QuestObjectives.PageIndex + 1)"
+				   asp-route-searchString="@Model.SearchString"
+				   class="btn btn-secondary @nextDisabled">
+					Next
+				</a>
+			</div>
+		</div>
+	</div>
+	<div class="col-5 offset-1">
+		<form method="post">
+			<div class="card">
+				<div class="card-header">
+					<h5>Details</h5>
+				</div>
+				<div class="card-body">
+					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+					@if (Model.QuestObjective != null && Model.QuestObjective.Id > 0)
+					{
+						<input type="hidden" asp-for="QuestObjective.Id" />
+					}
+					<div class="mb-3">
+						<label asp-for="QuestObjective.Name" class="control-label"></label>
+						@if (Model.CanCreateEdit)
+						{
+							<input asp-for="QuestObjective.Name" class="form-control" />
+						}
+						else
+						{
+							<input asp-for="QuestObjective.Name" class="form-control-plaintext" readonly />
+						}
+						<span asp-validation-for="QuestObjective.Name" class="text-danger"></span>
+					</div>
+					<div class="mb-3">
+						<label asp-for="QuestObjective.Description" class="control-label"></label>
+						@if (Model.CanCreateEdit)
+						{
+							<textarea asp-for="QuestObjective.Description" class="form-control"></textarea>
+						}
+						else
+						{
+							<textarea asp-for="QuestObjective.Description" class="form-control-plaintext" readonly></textarea>
+						}
+						<span asp-validation-for="QuestObjective.Description" class="text-danger"></span>
+					</div>
+					<div class="mb-3">
+						<label asp-for="QuestObjectiveDomain.Destinations" class="control-label"></label>
+						@if (Model.CanCreateEdit)
+						{
+							<select asp-for="SelectedDestinationIds" class="form-select" asp-items="ViewBag.Planets"></select>
+						}
+						else
+						{
+							@foreach (var item in Model.QuestObjectiveDomain.Destinations)
+							{
+								<span class="badge rounded-pill bg-secondary">@Html.Raw(item.Planet.Name)</span>
+							}
+						}
+						<span asp-validation-for="SelectedDestinationIds" class="text-danger"></span>
+					</div>
+					<div class="mb-3">
+						<p class="fst-italic">Archived items are retained, but they are no longer actionable or listed.</p>
+						<div class="form-check">
+							@if (Model.CanCreateEdit)
+							{
+								<input asp-for="QuestObjective.Archived" type="checkbox" class="form-check-input" />
+							}
+							else
+							{
+								<input asp-for="QuestObjective.Archived" type="checkbox" class="form-check-input" readonly />
+							}
+
+							<label asp-for="QuestObjective.Archived" class="form-check-label"></label>
+						</div>
+						<span asp-validation-for="QuestObjective.Archived" class="text-danger"></span>
+					</div>
+				</div>
+				<div class="card-footer">
+					@if (Model.CanCreateEdit)
+					{
+						<input type="submit" value="Save" class="btn btn-success"
+						   asp-route-id="@Model.ID" asp-route-sortOrder="@Model.CurrentSort" asp-route-pageIndex="@Model.QuestObjectives.PageIndex" asp-route-searchString="@Model.SearchString" />
+					}
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<div class="offcanvas offcanvas-start" tabindex="-1" id="searchFilterOffcanvas" aria-labelledby="searchFilterOffcanvasLabel">
+	<div class="offcanvas-header">
+		<h5 class="offcanvas-title" id="searchFilterOffcanvasLabel">Search/Filter Options</h5>
+		<button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+	</div>
+	<div class="offcanvas-body">
+		<form asp-page="./Index" method="get">
+			<div class="mb-3">
+				<label for="SearchString" class="form-label">Find in name/description:</label>
+				<input type="text" class="form-control" id="SearchString" name="SearchString" value="@Model.SearchString">
+			</div>
+			<hr class="mt-5" />
+			<div class="mb-3">
+				<input type="submit" value="Search" class="btn btn-primary btn-sm" title="Click to execute the search/filter request" />
+				<a asp-page="./Index" asp-route-sortOrder="@Model.CurrentSort" class="btn btn-primary btn-sm" title="Click to clear the search/filter options">Clear</a>
+			</div>
+		</form>
+	</div>
+</div>
+
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+	<script type="text/javascript" src="~/js/References/QuestObjectives/index.js" asp-append-version="true"></script>
+}

@@ -1,0 +1,120 @@
+﻿@page
+@model Holonet.Jedi.Academy.App.Pages.Members.EditModel
+
+@{
+	ViewData["Title"] = "Edit Member";
+}
+
+<h1>Edit an Existing Member</h1>
+<hr />
+<form method="post">
+	<div class="row">
+		<div class="col-md-6">
+			<div class="card">
+				<div class="card-header">
+					<h5>Member Data</h5>
+				</div>
+				<div class="card-body">
+					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+					<input type="hidden" asp-for="Student.Id" />
+					<div class="row">
+						<div class="col">
+							<div class="mb-3">
+								<label asp-for="Student.FirstName" class="control-label"></label>
+								<input asp-for="Student.FirstName" class="form-control" readonly />
+								<span asp-validation-for="Student.FirstName" class="text-danger"></span>
+							</div>
+						</div>
+						<div class="col">
+							<div class="mb-3">
+								<label asp-for="Student.LastName" class="control-label"></label>
+								<input asp-for="Student.LastName" class="form-control" readonly />
+								<span asp-validation-for="Student.LastName" class="text-danger"></span>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col">
+							<div class="mb-3">
+								<label asp-for="Student.SpeciesId" class="control-label"></label>
+								<select asp-for="Student.SpeciesId" class="form-select" asp-items="ViewBag.Species">
+									<option value="">Select a species</option>
+								</select>
+								<span asp-validation-for="Student.SpeciesId" class="text-danger"></span>
+							</div>
+						</div>
+						<div class="col">
+							<div class="mb-3">
+								<label asp-for="Student.PlanetId" class="control-label"></label>
+								<select asp-for="Student.PlanetId" class="form-select" asp-items="ViewBag.Planets">
+									<option value="">Select a planet</option>
+								</select>
+								<span asp-validation-for="Student.PlanetId" class="text-danger"></span>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col">
+							<div class="mb-3">
+								<label asp-for="Student.RankId" class="control-label"></label>
+								<select asp-for="Student.RankId" class="form-select" asp-items="ViewBag.Ranks">
+									<option value="">Select a rank</option>
+								</select>
+								<span asp-validation-for="Student.RankId" class="text-danger"></span>
+							</div>
+						</div>
+						<div class="col">
+							<div class="mb-3">
+								<label asp-for="Student.Experience" class="control-label"></label>
+								<input asp-for="Student.Experience" class="form-control" />
+								<span asp-validation-for="Student.Experience" class="text-danger"></span>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col">
+							<div class="mb-3">
+								<label asp-for="Student.InitiatedOn" class="control-label"></label>
+								<input asp-for="Student.InitiatedOn" class="form-control" />
+								<span asp-validation-for="Student.InitiatedOn" class="text-danger"></span>
+							</div>
+						</div>
+						<div class="col"></div>
+					</div>
+					<div class="row">
+						<div class="col">
+							<p class="fst-italic">Complete the last two fields if the member is no longer a participant of the academy.</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col">
+							<div class="mb-3">
+								<label asp-for="Student.LeftOn" class="control-label"></label>
+								<input asp-for="Student.LeftOn" class="form-control" />
+								<span asp-validation-for="Student.LeftOn" class="text-danger"></span>
+							</div>
+						</div>
+						<div class="col">
+							<div class="mb-3">
+								<label asp-for="Student.ReasonForTerminationId" class="control-label"></label>
+								<select asp-for="Student.ReasonForTerminationId" class="form-select" asp-items="ViewBag.TerminationReasons">
+									<option value="">Select a reason</option>
+								</select>
+								<span asp-validation-for="Student.ReasonForTerminationId" class="text-danger"></span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="card-footer">
+					<input type="submit" value="Update" class="btn btn-primary" /> |
+					<a asp-page="./Index">Back to List</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+}
