@@ -12,9 +12,18 @@ namespace Holonet.Jedi.Academy.App.Areas.Identity.Data
         public static async Task SeedRolesAsync(UserManager<JediAcademyAppUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             //Seed Roles
-            await roleManager.CreateAsync(new IdentityRole(Enums.Roles.Administrator.ToString()));
-            await roleManager.CreateAsync(new IdentityRole(Enums.Roles.Instructor.ToString()));
-            await roleManager.CreateAsync(new IdentityRole(Enums.Roles.Student.ToString()));
+            if (!await roleManager.RoleExistsAsync(Enums.Roles.Administrator.ToString()))
+            {
+                await roleManager.CreateAsync(new IdentityRole(Enums.Roles.Administrator.ToString()));
+            }
+			if (!await roleManager.RoleExistsAsync(Enums.Roles.Instructor.ToString()))
+			{
+				await roleManager.CreateAsync(new IdentityRole(Enums.Roles.Instructor.ToString()));
+			}
+			if (!await roleManager.RoleExistsAsync(Enums.Roles.Student.ToString()))
+			{
+				await roleManager.CreateAsync(new IdentityRole(Enums.Roles.Student.ToString()));
+			}
         }
 
         public static async Task SeedAdminAsync(UserManager<JediAcademyAppUser> userManager, RoleManager<IdentityRole> roleManager, UserSeedInformation identitySeeds)

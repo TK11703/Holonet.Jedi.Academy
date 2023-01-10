@@ -98,23 +98,24 @@ namespace Holonet.Jedi.Academy.BL.Data
 
                 var forcePowers = new ForcePower[]
                 {
-                    new ForcePower{Name="Animal Friendship"},
-                    new ForcePower{Name="Cure Disease"},
-                    new ForcePower{Name="Cure Poison"},
-                    new ForcePower{Name="Droid Disable"},
-                    new ForcePower{Name="Blinding"},
-                    new ForcePower{Name="Enlightenment"},
-                    new ForcePower{Name="Healing"},
-                    new ForcePower{Name="Stun"},
-                    new ForcePower{Name="Persuasion"},
-                    new ForcePower{Name="Projection"},
-                    new ForcePower{Name="Push"},
-                    new ForcePower{Name="Pull"},
-                    new ForcePower{Name="Revitalize"},
-                    new ForcePower{Name="Shatterpoint"},
-                    new ForcePower{Name="Telekinesis"}
-
-                };
+                    new ForcePower{Name="Animal Kinship", MinimumRankId=3, Description="An ability of the Force that allows its user to connect mentally with animals."},
+                    new ForcePower{Name="Cure Disease", MinimumRankId=7, Description="A variant of Force healing that can cure diseases afflicting living things."},
+                    new ForcePower{Name="Cure Poison", MinimumRankId=4, Description="A variant of Force healing that can remove or detoxify poisons afflicting living things."},
+                    new ForcePower{Name="Droid Disable", MinimumRankId=3, Description="A Force power developed during the Old Sith Wars that allows a Jedi to overload and damage electronic systems, such as droids."},
+                    new ForcePower{Name="Blinding", MinimumRankId=7, Description = "Produces a burst of Force energy that overwhelms a target's optic nerves, causes temporary blindness."},
+                    new ForcePower{Name="Enlightenment", MinimumRankId=6, Description = "A passive/supplementary Force power that took the Force powers a Jedi was most skilled in, pushing them to the highest degree that the Jedi had previously mastered during his or her routine training."},
+                    new ForcePower{Name="Healing", MinimumRankId=5, Description = "A power that used the Force to accelerate the natural healing process rapidly and can be used to heal the most fatal of wounds and injuries."},
+                    new ForcePower{Name="Stun", MinimumRankId=5, Description = "A Force power that can temporarily deaden the senses and perceptions of a targeted enemy, preventing most movements."},
+                    new ForcePower{Name="Persuasion", MinimumRankId=3, Description = "The use of the Force to exert influence."},
+                    new ForcePower{Name="Projection", MinimumRankId=5, Description = "A mysterious Force ability (possibly a variation of Force illusion), enabling the user to create an apparition similar to themselves to distract, confuse or lure enemies."},
+                    new ForcePower{Name="Push", MinimumRankId=1, Description = "A telekinetic ability using the Force to push objects away from the user."},
+                    new ForcePower{Name="Pull", MinimumRankId=1, Description = "A telekinetic ability using the Force that can cause a material body to draw close to the user. The greater the user's aptitude with this, the heavier the object that could be pulled."},
+                    new ForcePower{Name="Revitalize", MinimumRankId=8, Description = " A Force technique that can revitalize an exhausted, wounded or, unconscious user, or whoever the user directed it at."},
+                    new ForcePower{Name="Shatterpoint", MinimumRankId=9, Description = "A Force ability that can be used to sense the significance of an event, though it also referred to key moments where actions could change events."},
+                    new ForcePower{Name="Telekinesis", MinimumRankId=5, Description = "The ability to move and otherwise manipulate physical matter in a variety of ways, all while using the power of the Force. "},
+					new ForcePower{Name="Deflection", MinimumRankId=6, Description = "A Force power used to deflect incoming attacks or blaster bolts, when a lightsaber was not available to perform the action."},
+                    new ForcePower{Name="Psychometry", MinimumRankId=4, Description = "Allowed the user to sense the events associated with an object or location."}
+				};
 
                 context.ForcePowers.AddRange(forcePowers);
                 await context.SaveChangesAsync();
