@@ -1,8 +1,8 @@
 name: Build and deploy .NET Core application to Web App JediAcademy
-on:
+'on':
   push:
     branches:
-    - main
+      - main
 env:
   AZURE_WEBAPP_NAME: JediAcademy
   AZURE_WEBAPP_PACKAGE_PATH: Holonet.Jedi.Academy.App\published
@@ -13,67 +13,64 @@ jobs:
   build:
     runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v2
-    
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
-    
-    - name: Restore
-      run: dotnet restore "${{ env.WORKING_DIRECTORY }}"
-    
-    - name: Build
-      run: dotnet build "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-restore
-    
-#    - name: Test
-#      run: dotnet test "${{ env.WORKING_DIRECTORY }}" --no-build
-    
-    - name: Publish
-      run: dotnet publish "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} -p:EnvironmentName=Production --no-build --output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
-      
-    - name: Install EF Tool
-      run: |
-        dotnet new tool-manifest
-        dotnet tool install dotnet-ef
-        
-    - name: Generate Academy scripts
-      run: dotnet ef migrations script --output ${{env.WORKING_DIRECTORY}}/sql/sql-scripta.sql --idempotent --project Holonet.Jedi.Academy.App --context AcademyContext --no-build
-    
-    - name: Generate User scripts
-      run: dotnet ef migrations script --output ${{env.WORKING_DIRECTORY}}/sql/sql-scriptb.sql --idempotent --project Holonet.Jedi.Academy.App --context JediAcademyAppUserContext --no-build
-    
-    - name: Apply Academy EF migration script
-      uses: Azure/sql-action@v1.2
-      with:
-        connection-string: ${{ secrets.AZURE_SQL_CONNECTION_STRING }}
-        sql-file: ${{env.WORKING_DIRECTORY}}/sql/sql-scripta.sql
-	
-    - name: Apply User EF migration script
-      uses: Azure/sql-action@v1.2
-      with:
-        connection-string: ${{ secrets.AZURE_SQL_CONNECTION_STRING }}
-        sql-file: ${{env.WORKING_DIRECTORY}}/sql/sql-scriptb.sql
-	
-    - name: Publish Artifacts
-      uses: actions/upload-artifact@v1.0.0
-      with:
-        name: webapp
-        path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
-	
+      - uses: actions/checkout@v2
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '${{ env.DOTNET_CORE_VERSION }}'
+      - name: Restore
+        run: 'dotnet restore "${{ env.WORKING_DIRECTORY }}"'
+      - name: Build
+        run: >-
+          dotnet build "${{ env.WORKING_DIRECTORY }}" --configuration ${{
+          env.CONFIGURATION }} --no-restore
+      - name: Publish
+        run: >-
+          dotnet publish "${{ env.WORKING_DIRECTORY }}" --configuration ${{
+          env.CONFIGURATION }} -p:EnvironmentName=Production --no-build --output
+          "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
+      - name: Install EF Tool
+        run: |
+          dotnet new tool-manifest
+          dotnet tool install dotnet-ef
+      - name: Generate Academy scripts
+        run: >-
+          dotnet ef migrations script --output
+          ${{env.WORKING_DIRECTORY}}/sql/sql-scripta.sql --idempotent --project
+          Holonet.Jedi.Academy.App --context AcademyContext --no-build
+      - name: Generate User scripts
+        run: >-
+          dotnet ef migrations script --output
+          ${{env.WORKING_DIRECTORY}}/sql/sql-scriptb.sql --idempotent --project
+          Holonet.Jedi.Academy.App --context JediAcademyAppUserContext
+          --no-build
+      - name: Apply Academy EF migration script
+        uses: Azure/sql-action@v1.2
+        with:
+          connection-string: '${{ secrets.AZURE_SQL_CONNECTION_STRING }}'
+          sql-file: '${{env.WORKING_DIRECTORY}}/sql/sql-scripta.sql'
+      - name: Apply User EF migration script
+        uses: Azure/sql-action@v1.2
+        with:
+          connection-string: '${{ secrets.AZURE_SQL_CONNECTION_STRING }}'
+          sql-file: '${{env.WORKING_DIRECTORY}}/sql/sql-scriptb.sql'
+      - name: Publish Artifacts
+        uses: actions/upload-artifact@v1.0.0
+        with:
+          name: webapp
+          path: '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}'
   deploy:
     runs-on: windows-latest
     needs: build
     steps:
-    - name: Download artifact from build job
-      uses: actions/download-artifact@v2
-      with:
-        name: webapp
-        path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
-    
-    - name: Deploy to Azure WebApp
-      uses: azure/webapps-deploy@v2
-      with:
-        app-name: ${{ env.AZURE_WEBAPP_NAME }}
-        publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
-        package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v2
+        with:
+          name: webapp
+          path: '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}'
+      - name: Deploy to Azure WebApp
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: '${{ env.AZURE_WEBAPP_NAME }}'
+          publish-profile: '${{ secrets.AZURE_PUBLISH_PROFILE }}'
+          package: '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}'
