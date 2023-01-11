@@ -27,7 +27,21 @@ namespace Holonet.Jedi.Academy.App.Controllers
             _logger = logger;
         }
 
-        [Route("AcknowledgeDisclaimer")]
+		[Route("KeepAlive")]
+		[HttpGet]
+		public IActionResult KeepAlive()
+		{
+			try
+			{
+				return NoContent();
+			}
+			catch (Exception ex)
+			{
+				return StatusCode(StatusCodes.Status500InternalServerError, ex);
+			}
+		}
+
+		[Route("AcknowledgeDisclaimer")]
         [HttpGet]
         public IActionResult AcknowledgeDisclaimer()
         {

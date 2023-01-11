@@ -1,0 +1,23 @@
+﻿@page "{code?}"
+@model Holonet.Jedi.Academy.App.Pages.Errors.SessionExpiredModel
+@{
+	ViewData["Title"] = "Session Expired";
+	Layout = "/Pages/Shared/_IdentityMinimalLayout.cshtml";
+}
+<div class="row justify-content-center">
+	<div class="col-8">
+		<h1>Session Expired</h1>
+		<p class="lead">Your session has been idle for too long.</p>
+		<div class="card border-danger mb-3">
+			<div class="card-body">
+				<p class="text-muted wordWrap">
+				<p>Please login to the site again.</p>
+				</p>
+			</div>
+		</div>
+		<hr />
+		<div class="mt-4">
+			<a href="/Identity/Account/Login?ReturnUrl=%2Findex" class="btn btn-secondary" title="Click to login">Login</a>
+		</div>
+	</div>
+</div>

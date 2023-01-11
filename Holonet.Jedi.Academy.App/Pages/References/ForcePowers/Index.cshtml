@@ -66,7 +66,7 @@
 						<label asp-for="ForcePower.Description" class="control-label"></label>
 						@if (Model.CanCreateEdit)
 						{
-							<textarea asp-for="ForcePower.Description" class="form-control"></textarea>
+							<textarea asp-for="ForcePower.Description" class="form-control expandable"></textarea>
 						}
 						else
 						{
@@ -122,5 +122,6 @@
 	@{
 		await Html.RenderPartialAsync("_ValidationScriptsPartial");
 	}
+	<script type="text/javascript" src="~/lib/plugins/jquery-autosize/jquery.autosize.min.js"></script>
 	<script type="text/javascript" src="~/js/References/ForcePowers/index.js" asp-append-version="true"></script>
 }

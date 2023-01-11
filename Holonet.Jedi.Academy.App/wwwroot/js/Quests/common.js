@@ -5,7 +5,7 @@
     $("#removeObjectives").click(function () {
         RemoveSelectedObjectives();
     });
-    
+    ConfigureExpandableTextAreas(); //global.js
 });
 
 function AddObjective(objId) {

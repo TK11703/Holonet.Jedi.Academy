@@ -15,6 +15,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="Pages\Errors\SessionExpired.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
    <PackageReference Include="FoolProof.Core" Version="1.1.35" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.11" />
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
@@ -48,8 +52,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Pages\Errors\SessionExpired.cshtml" />
     <None Include="Pages\Errors\HttpError.cshtml" />
     <None Include="wwwroot\js\Identity\qr.js" />
+    <None Include="wwwroot\lib\plugins\jquery-autosize\jquery.autosize.js" />
+    <None Include="wwwroot\lib\plugins\jquery-autosize\jquery.autosize.min.js" />
+    <None Include="wwwroot\lib\plugins\jquery-idleTimeout\keepalive.php" />
+    <None Include="wwwroot\lib\plugins\jquery-idleTimeout\README.markdown" />
+    <None Include="wwwroot\lib\plugins\jquery-idleTimeout\src\jquery.idletimeout.js" />
+    <None Include="wwwroot\lib\plugins\jquery-idleTimeout\src\jquery.idletimer.js" />
+    <None Include="wwwroot\lib\plugins\jquery-idleTimeout\Thumbs.db" />
   </ItemGroup>
 
 </Project>

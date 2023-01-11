@@ -68,8 +68,9 @@ void ConfigureServices(IServiceCollection services)
 
     IMvcBuilder mvcBuilder = services.AddRazorPages(options =>
     {
-        options.Conventions.AuthorizeFolder("/", "Instructor").AllowAnonymousToFolder("/Identity/Account");
-        options.Conventions.AuthorizeFolder("/Identity/Account/Manage", "Instructor");
+		options.Conventions.AllowAnonymousToFolder("/Identity/Account").AllowAnonymousToPage("/Errors/SessionExpired");
+		options.Conventions.AuthorizeFolder("/", "Student");		
+        options.Conventions.AuthorizeFolder("/Identity/Account/Manage", "Student");
         options.Conventions.AuthorizeFolder("/Identity/RoleManager", "Administrator");
         options.Conventions.AuthorizeFolder("/Identity/UserManager", "Administrator");
     });

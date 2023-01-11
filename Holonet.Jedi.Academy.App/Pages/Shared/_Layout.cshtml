@@ -93,13 +93,17 @@
 			<p class="text-center text-muted">2022 @Config.ApplicationInformation.ApplicationName</p>
 		</div>
 	</footer>
-
+	<!-- Session Timeout Markup -->
+	@await Html.PartialAsync("~/Pages/Shared/SessionTimeoutAlert.cshtml")
+	@Html.Hidden("sessionTimeoutMins", @Config.SiteSettings.SessionTimeout)
 	<script type="text/javascript" defer src="~/lib/fontawesome/v5/js/solid.min.js"></script>
 	<script type="text/javascript" defer src="~/lib/fontawesome/v5/js/fontawesome.min.js"></script>
 	<script type="text/javascript" src="~/lib/jquery/dist/jquery.min.js"></script>
 	<script type="text/javascript" src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 	<script type="text/javascript" src="~/lib/plugins/bootbox/bootbox.min.js"></script>
 	<script type="text/javascript" src="~/lib/plugins/toastr/toastr.min.js"></script>
+	<script type="text/javascript" src="~/lib/plugins/jquery-idleTimeout/src/jquery.idletimeout.js"></script>
+    <script type="text/javascript" src="~/lib/plugins/jquery-idleTimeout/src/jquery.idletimer.js"></script>
 	<script type="text/javascript" src="~/js/global.js" asp-append-version="true"></script>
 	<script type="text/javascript" src="~/js/site.js" asp-append-version="true"></script>
 	@RenderSection("scripts", required: false)

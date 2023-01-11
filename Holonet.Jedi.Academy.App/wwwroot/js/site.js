@@ -1,7 +1,9 @@
 ﻿$(document).ready(function () {
     ConfigureSearchUI();
     ConfigureSessionTimeoutNotifier();
-
+    GetNotifications();
+    var repeatEvery = 1000 * 60 * 2; //5 minutes
+    setInterval(GetNotifications, repeatEvery);
     $("#logout").click(function () {
         $(this).addClass("disabled")
         Signout();
@@ -61,4 +63,33 @@ function ConfigureSessionTimeoutNotifier() {
             // the dialog closes.  nothing else needs to be done
         }
     });
+}
+
+function GetNotifications() {
+    $.getJSON("/api/notifications/GetNotifications")
+        .fail(function (jqxhr, textStatus, error) {
+            ShowAjaxError(jqxhr);
+        })
+        .done(function (serviceResponse) {
+            if (serviceResponse != null && serviceResponse.length > 0) {
+                $.each(serviceResponse, function (index, item) {
+                    showPermanentInformationToast("System Notification", item.Message, function () { AckNotif(item.Id) });
+                });
+            }
+        });
+}
+
+function AckNotif(notifId) {
+    $.ajax({
+        url: "/api/notifications/AckNotif",
+        type: "POST",
+        data: JSON.stringify({ "notifId": notifId }),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json"
+    })
+        .fail(function (jqxhr, textStatus, error) {
+            ShowAjaxError(jqxhr);
+        })
+        .done(function (serviceResponse) {           
+        });
 }

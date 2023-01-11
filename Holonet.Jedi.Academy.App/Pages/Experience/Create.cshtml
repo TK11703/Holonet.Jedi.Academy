@@ -25,7 +25,7 @@
 					</div>
 					<div class="mb-3">
 						<label asp-for="Knowledge.Description" class="control-label"></label>
-						<textarea asp-for="Knowledge.Description" class="form-control"></textarea>
+						<textarea asp-for="Knowledge.Description" class="form-control expandable"></textarea>
 						<span asp-validation-for="Knowledge.Description" class="text-danger"></span>
 					</div>
 				</div>
@@ -45,4 +45,6 @@
 	@{
 		await Html.RenderPartialAsync("_ValidationScriptsPartial");
 	}
+		<script type="text/javascript" src="~/lib/plugins/jquery-autosize/jquery.autosize.min.js"></script>
+	<script type="text/javascript" src="~/js/Experiences/common.js" asp-append-version="true"></script>
 }

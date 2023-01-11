@@ -48,6 +48,38 @@ function LoadingMask(isOn, message) {
     }
 }
 
+function ConfigureExpandableTextAreas(parentElement) {
+    if (parentElement != null && parentElement != "") {
+        if ($(".expandable", $(parentElement)).length > 0) {
+            autosize($(".expandable", $(parentElement)));
+        }
+    }
+    else {
+        if ($(".expandable").length > 0) {
+            autosize($(".expandable"));
+        }
+    }
+}
+
+function TriggerExpandableTextAreas(parentElement) {
+    if (parentElement != null && parentElement != "") {
+        if ($(".expandable", $(parentElement)).length > 0) {
+            autosize.update($(".expandable", $(parentElement)));
+        }
+    }
+    else {
+        if ($(".expandable").length > 0) {
+            autosize.update($(".expandable"));
+        }
+    }
+}
+
+function TriggerExpandableTextArea(obj) {
+    if (obj != null) {
+        autosize.update($(obj));
+    }
+}
+
 function ShowWebServiceErrors(serviceResponse, callback) {
     //Alert user to the issues in the ajaxResponse
     var issuesToShow = "A problem occurred during the last request. The details are indicated below:";
