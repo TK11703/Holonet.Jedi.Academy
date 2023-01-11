@@ -15,11 +15,8 @@ namespace Holonet.Jedi.Academy.Entities.App
 		public int StudentId { get; set; }
 		public Student? Student { get; set; }
 
-		public int? KnowledgeId { get; set; }
-		public Knowledge? Knowledge { get; set; }
-
-		public int? QuestId { get; set; }
-		public Quest? Quest { get; set; }
+        public int? RankId { get; set; }
+        public Rank? Rank { get; set; }
 
 	}
 }

@@ -203,7 +203,6 @@ namespace Holonet.Jedi.Academy.App.Pages
 				{
 					throw new Exception("The student does not currently possess any reward points. Please try again later.");
 				}
-				var questId = rewardPoint.QuestId;
 				_context.RewardPoints.Remove(rewardPoint);
 				await _context.SaveChangesAsync();
 				_context.ForcePowersLearned.Add(new ForcePowerXP { ForcePowerId = SelectedForcePowerId, StudentId = studentId, GainedOn = DateTime.Now });

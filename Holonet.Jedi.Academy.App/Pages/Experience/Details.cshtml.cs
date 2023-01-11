@@ -57,7 +57,6 @@ namespace Holonet.Jedi.Academy.App.Pages.Experience
             else 
             {
                 Knowledge = knowledge;
-				//CanJoin = EvaluateKnowOpEligibility(currentUser, Knowledge);
 			}
 			KnowledgeParticipation = await _context.KnowledgeLearned
 				.Where(x => x.KnowledgeId.Equals(id) && x.StudentId.Equals(GetStudentId(currentUser)))
@@ -66,7 +65,7 @@ namespace Holonet.Jedi.Academy.App.Pages.Experience
 			return Page();
         }
 
-		public async Task<IActionResult> OnPostCompleteObjectiveAsync(int? id)
+		public async Task<IActionResult> OnPostCompleteAsync(int? id)
 		{
 			if (id == null || _context.KnowledgeLearned == null)
 			{

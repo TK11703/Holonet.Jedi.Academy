@@ -115,20 +115,12 @@ namespace Holonet.Jedi.Academy.App.Pages.Quests
 				}
 				if (updateNeeded)
 				{
-					bool skillPointNeeded = false;
 					if (QuestParticipation.PercentComplete.Equals(100))
 					{
 						QuestParticipation.CompletedOn = DateTime.Now;
-						skillPointNeeded = true;
 					}
 					_context.QuestParticipation.Update(QuestParticipation);
 					await _context.SaveChangesAsync();
-
-					if (skillPointNeeded)
-					{
-						_context.RewardPoints.Add(new RewardPoint { StudentId = GetStudentId(currentUser), QuestId = ID });
-						await _context.SaveChangesAsync();
-					}
 				}
 			}
 			else
