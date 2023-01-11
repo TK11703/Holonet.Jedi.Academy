@@ -30,6 +30,8 @@ namespace Holonet.Jedi.Academy.App.Pages
 		[BindProperty]
 		public UserProfileVM UserProfile { get; set; }
 
+		public Student Student { get; set; }
+
 		public List<QuestXP> PersonalQuests { get; set; }
 
 		public List<KnowledgeXP> PersonalSkills { get; set; }
@@ -57,6 +59,7 @@ namespace Holonet.Jedi.Academy.App.Pages
 		}
 
 		public int StudentId { get; set; }
+
 		[BindProperty]
 		[Required]
 		[Display(Name = "Skill Selection")]
@@ -86,6 +89,14 @@ namespace Holonet.Jedi.Academy.App.Pages
 					UserProfile.Populate(userProfileDomain);
 				}
 				StudentId = userProfileDomain.StudentId;
+				if(StudentId > 0)
+				{
+					Student = await _context.Students.FindAsync(StudentId);
+				}
+				else
+				{
+					Student = new Student() { Id = 0 };
+				}
 				RewardPoints = await _context.RewardPoints.Where(x => x.StudentId.Equals(StudentId)).ToListAsync();				
 				ButtonAction = "Update";
 				List<int> excludeIds = userProfileDomain.Student.ForcePowers.Select(x=>x.ForcePowerId).ToList();
@@ -98,6 +109,7 @@ namespace Holonet.Jedi.Academy.App.Pages
 			else
 			{
 				StudentId = 0;
+				Student = new Student() { Id=0 };
 				UserProfile.UserId = currentUser.UserId;
 				UserProfile.FirstName = currentUser.FirstName;
 				UserProfile.LastName = currentUser.LastName;
@@ -204,17 +216,8 @@ namespace Holonet.Jedi.Academy.App.Pages
 					throw new Exception("The student does not currently possess any reward points. Please try again later.");
 				}
 				_context.RewardPoints.Remove(rewardPoint);
-				await _context.SaveChangesAsync();
 				_context.ForcePowersLearned.Add(new ForcePowerXP { ForcePowerId = SelectedForcePowerId, StudentId = studentId, GainedOn = DateTime.Now });
 				await _context.SaveChangesAsync();
-				//The following flag and EXP updates will be added by automation
-				//var questXP = await _context.QuestParticipation.Where(x => x.QuestId.Equals(questId) && x.StudentId.Equals(studentId)).FirstOrDefaultAsync();
-				//if (questXP != null)
-				//{
-				//	questXP.AddedToStudent = true;
-				//	_context.QuestParticipation.Update(questXP);
-				//	await _context.SaveChangesAsync();
-				//}
 			}
 			else
 			{

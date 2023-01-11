@@ -74,7 +74,20 @@ namespace Holonet.Jedi.Academy.Entities.App
         [Display(Name = "Knowledge")]
         public List<KnowledgeXP> Knowledge { get; set; }
 
-        public Student()
+		public double RankProgress
+		{
+			get
+			{
+				if (Rank != null)
+				{
+					return Math.Round((((double)Experience / Rank.Maximum) * 100), 0);
+				}
+				else
+					return 0;
+			}
+		}
+
+		public Student()
         {
             Quests = new List<QuestXP>();
             Knowledge = new List<KnowledgeXP>();

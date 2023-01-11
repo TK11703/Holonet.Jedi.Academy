@@ -71,6 +71,26 @@
 		<h1><i class="far fa-star"></i></h1>
 	</div>
 	<div class="col-md-7 offset-md-1">
+		<div class="card mb-2">
+			<div class="card-header d-flex justify-content-between">
+				<span class="fw-bold">
+					Current Rank: <span class="badge bg-secondary">@Model.Student.Rank.Name</span>
+				</span>
+				<span class="fw-bold">Current Experience: <span class="badge bg-secondary">@Model.Student.Experience</span></span>
+			</div>
+			<div class="card-body d-flex justify-content-between align-items-center">
+				<div class="text-center p-2">Minimum<br />@Model.Student.Rank.Minimum</div>
+				<div class="p-2 flex-grow-1">
+					<div class="progress">
+						<div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: @Model.Student.RankProgress%" aria-valuenow="@Model.Student.RankProgress" aria-valuemin="0" aria-valuemax="100">
+							@Model.Student.RankProgress%
+						</div>
+					</div>
+				</div>
+				<div class="text-center p-2">Maximum <br />@Model.Student.Rank.Maximum</div>
+			</div>
+		</div>
+		
 		<div class="card">
 			<div class="card-header">
 				<ul class="nav nav-tabs card-header-tabs" id="profileTabs" role="tablist">
@@ -119,7 +139,7 @@
 						<div class="list-group">
 							@foreach (var item in Model.PersonalSkills)
 							{
-								<a href="/Skills/Details?id=@item.Knowledge.Id" class="list-group-item list-group-item-action" aria-current="true">
+								<a href="/Experience/Details?id=@item.Knowledge.Id" class="list-group-item list-group-item-action" aria-current="true">
 									<div class="d-flex w-100 justify-content-between">
 										<h5 class="mb-1">@item.Knowledge.Name</h5>
 										<small>@item.Status</small>

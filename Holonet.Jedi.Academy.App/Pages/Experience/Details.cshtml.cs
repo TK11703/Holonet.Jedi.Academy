@@ -13,6 +13,8 @@ using Holonet.Jedi.Academy.Entities.Configuration;
 using Microsoft.Extensions.Options;
 using Holonet.Jedi.Academy.App.Areas.Identity.Enums;
 using Holonet.Jedi.Academy.Entities;
+using Holonet.Jedi.Academy.BL.Quests;
+using Holonet.Jedi.Academy.Entities.Models;
 
 namespace Holonet.Jedi.Academy.App.Pages.Experience
 {
@@ -77,16 +79,30 @@ namespace Holonet.Jedi.Academy.App.Pages.Experience
 			{
 				return NotFound();
 			}
-			KnowledgeParticipation = await _context.KnowledgeLearned.Where(x => x.KnowledgeId.Equals(id) && x.StudentId.Equals(GetStudentId(currentUser))).FirstOrDefaultAsync();
+			int studentId = GetStudentId(currentUser);
+			KnowledgeParticipation = await _context.KnowledgeLearned
+				.Include(k => k.Knowledge)
+				.Where(x => x.KnowledgeId.Equals(id) && x.StudentId.Equals(studentId)).FirstOrDefaultAsync();
 			if (KnowledgeParticipation != null)
 			{
-				KnowledgeParticipation.CompletedOn = DateTime.Now;
-				_context.KnowledgeLearned.Update(KnowledgeParticipation);
-				await _context.SaveChangesAsync();
+				ParticipationHandler quests = new ParticipationHandler(_context);
+				if (!await quests.MarkAsCompleteAsync(KnowledgeParticipation))
+				{
+					throw new Exception("Unable to mark this experience as complete.");
+				}
+				if (!await quests.UpdateExperienceAsync(KnowledgeParticipation, studentId))
+				{
+					throw new Exception("Unable to update the experience value for the user.");
+				}
+				RankHandler ranking = new RankHandler(_context);
+				if (await ranking.IsEligible(studentId))
+				{
+					await ranking.RankUp(studentId);
+				}
 			}
 			else
 			{
-				//throw error, not participating yet
+				throw new Exception("You are not participating in this experience yet.");
 			}
 			return RedirectToPage("Details", new { id = ID });
 		}
