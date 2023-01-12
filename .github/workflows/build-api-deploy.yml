@@ -5,7 +5,7 @@ name: Build and deploy .NET Core application to Function JediAcademy-Api
       - main
 env:
   AZURE_FUNCTIONAPP_NAME: JediAcademy-Api
-  AZURE_FUNCTIONAPP_PACKAGE_PATH: Holonet.Jedi.Academy.Api\published
+  AZURE_FUNCTIONAPP_PACKAGE_PATH: Holonet.Jedi.Academy.Api
   CONFIGURATION: Release
   DOTNET_VERSION: 6.0.x
   WORKING_DIRECTORY: Holonet.Jedi.Academy.Api
