@@ -15,6 +15,8 @@ using Holonet.Jedi.Academy.Entities.Models;
 using Holonet.Jedi.Academy.App.Areas.Identity.Data;
 using Microsoft.AspNetCore.Identity;
 using Holonet.Jedi.Academy.App.Areas.Identity.Enums;
+using Holonet.Jedi.Academy.BL.Search;
+using Holonet.Jedi.Academy.BL.Quests;
 
 namespace Holonet.Jedi.Academy.App.Pages.Quests
 {
@@ -97,10 +99,11 @@ namespace Holonet.Jedi.Academy.App.Pages.Quests
 			{
 				return NotFound();
 			}
+			int studentId = GetStudentId(currentUser);
 			QuestParticipation = await _context.QuestParticipation
 				.Include(qp => qp.CompletedObjectives)
 				.Include(qp => qp.Quest).ThenInclude(q => q.Objectives)
-				.Where(x => x.QuestId.Equals(id) && x.StudentId.Equals(GetStudentId(currentUser)))
+				.Where(x => x.QuestId.Equals(id) && x.StudentId.Equals(studentId))
 				.FirstOrDefaultAsync();
 			if (QuestParticipation != null)
 			{
@@ -115,17 +118,30 @@ namespace Holonet.Jedi.Academy.App.Pages.Quests
 				}
 				if (updateNeeded)
 				{
-					if (QuestParticipation.PercentComplete.Equals(100))
-					{
-						QuestParticipation.CompletedOn = DateTime.Now;
-					}
 					_context.QuestParticipation.Update(QuestParticipation);
 					await _context.SaveChangesAsync();
+				}
+				if (QuestParticipation.PercentComplete.Equals(100))
+				{
+					ParticipationHandler quests = new ParticipationHandler(_context);
+					if (!await quests.MarkAsCompleteAsync(QuestParticipation))
+					{
+						throw new Exception("Unable to mark this quest as complete.");
+					}
+					if (!await quests.UpdateExperienceAsync(QuestParticipation, studentId))
+					{
+						throw new Exception("Unable to update the experience value for the user.");
+					}
+					RankHandler ranking = new RankHandler(_context);
+					if (await ranking.IsEligible(studentId))
+					{
+						await ranking.RankUp(studentId);
+					}
 				}
 			}
 			else
 			{
-				//throw error, not participating yet
+				throw new Exception("You are not participating in this quest yet.");
 			}
 			return RedirectToPage("Details", new { id = ID });
 		}

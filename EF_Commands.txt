@@ -1,11 +1,21 @@
-dotnet ef migrations add MigrationName --namespace=MyProject.MobileAppService.Migrations.Development --output-dir Migrations/Development --context ContextName
 
-Add-Migration InitialCreate -context AcademyContext -outputdir Migrations/Academy
+Application DB Context
+--Adding a new migration, which is based off model changes and creates DB scripts
+Add-Migration UNIQUENAME -context AcademyContext -outputdir Migrations/Academy
+
+--Updates the database with the migrations, using the configured connection string within the app config
 Update-Database -context AcademyContext
+
+--Removes the latest migration script
+Remove-Migration -context AcademyContext
+
+--Removes the database tables created by the models.
 Drop-Database -context AcademyContext
 
+Application User DB Context
 
-Add-Migration InitialCreate -context JediAcademyAppUserContext -outputdir Migrations/AppUser
+--Adding a new migration, which is based off model changes and creates DB scripts
+Add-Migration UNIQUENAME -context JediAcademyAppUserContext -outputdir Migrations/AppUser
 Update-Database -context JediAcademyAppUserContext
 Drop-Database -context JediAcademyAppUserContext
 
