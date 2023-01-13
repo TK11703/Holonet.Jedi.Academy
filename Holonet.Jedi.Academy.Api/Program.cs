@@ -1,6 +1,7 @@
 using Holonet.Jedi.Academy.BL.Data;
 using Holonet.Jedi.Academy.Entities.Configuration;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,7 +21,7 @@ void ConfigureConfiguration(ConfigurationManager configuration)
 
 void ConfigureServices(IServiceCollection services)
 {
-	services.AddControllers();
+	services.AddControllers().AddJsonOptions(options =>	options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 	// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 	services.AddEndpointsApiExplorer();
 	services.AddSwaggerGen();
