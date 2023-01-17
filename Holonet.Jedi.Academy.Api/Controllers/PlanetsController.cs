@@ -42,7 +42,7 @@ namespace Holonet.Jedi.Academy.Api.Controllers
 			return planet;
 		}
 
-		[Route("api/[controller]/[action]")]
+		[Route("[action]")]
 		// GET: api/[controller]/[action]
 		[HttpGet]
 		public async Task<ActionResult<Planet>> GetRandom()

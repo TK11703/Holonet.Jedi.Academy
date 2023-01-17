@@ -41,7 +41,7 @@ namespace Holonet.Jedi.Academy.Api.Controllers
 			return ObjectiveDestination;
 		}
 
-		[Route("api/[controller]/[action]")]
+		[Route("[action]")]
 		// GET: api/[controller]/[action]
 		[HttpGet]
 		public async Task<ActionResult<ObjectiveDestination>> GetRandom()
