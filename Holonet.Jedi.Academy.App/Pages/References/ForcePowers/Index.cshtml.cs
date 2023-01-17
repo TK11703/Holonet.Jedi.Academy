@@ -58,7 +58,10 @@ namespace Holonet.Jedi.Academy.App.Pages.References.ForcePowers
 					ID = id.Value;
 					ForcePowerDomain = await _context.ForcePowers.FindAsync(id);
 					ForcePower = new ForcePowerVM();
-					ForcePower.Populate(ForcePowerDomain);
+					if (ForcePowerDomain != null)
+					{
+						ForcePower.Populate(ForcePowerDomain);
+					}
 				}
 			}            
         }

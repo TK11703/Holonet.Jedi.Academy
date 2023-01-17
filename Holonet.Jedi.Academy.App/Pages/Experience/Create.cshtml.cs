@@ -44,7 +44,7 @@ namespace Holonet.Jedi.Academy.App.Pages.Experience
 		}
 
 		[BindProperty]
-		public Knowledge Knowledge { get; set; }
+		public Knowledge Knowledge { get; set; } = default!;
 
 
 		// To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD

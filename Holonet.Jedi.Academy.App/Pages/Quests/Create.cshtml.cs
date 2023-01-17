@@ -46,10 +46,10 @@ namespace Holonet.Jedi.Academy.App.Pages.Quests
 
 		[BindProperty]
 		[Required]
-		public int[] SelectedDestinationIds { get; set; }
+		public int[] SelectedDestinationIds { get; set; } = default!;
 
 		[BindProperty]
-		public QuestVM Quest { get; set; }
+		public QuestVM Quest { get; set; } = default!;
 
 		public double NewQuestsToday { get; set; }
 
@@ -57,7 +57,7 @@ namespace Holonet.Jedi.Academy.App.Pages.Quests
 
 		public double AvgCompletionTime { get; set; }
 
-		public string MostPopularPlanet { get; set; }
+		public string MostPopularPlanet { get; set; } = string.Empty;
 
 
 		// To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD

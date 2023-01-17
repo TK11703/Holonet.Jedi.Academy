@@ -190,10 +190,6 @@ namespace Holonet.Jedi.Academy.BL
                     }
                 }
             }
-            if (variableValue.ToLower().Equals("null"))
-            {
-                variableValue = null;
-            }
             return variableValue;
         }
 

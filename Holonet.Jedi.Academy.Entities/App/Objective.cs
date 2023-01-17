@@ -39,7 +39,7 @@ namespace Holonet.Jedi.Academy.Entities.App
 		{
 			if(Destinations != null)
 			{
-				return Destinations.Where(x=>x.Planet != null).Select(x=>x.Planet).ToList();
+				return Destinations.Where(x=>x.Planet != null).Select(x=>x.Planet!).ToList();
 			}
 			else
 			{

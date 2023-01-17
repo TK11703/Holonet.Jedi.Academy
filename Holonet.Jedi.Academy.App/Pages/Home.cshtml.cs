@@ -19,7 +19,7 @@ namespace Holonet.Jedi.Academy.App.Pages
 
         public bool CompleteProfile { get; set; }
 
-        public string ProfileIssuesJSON { get; set; }
+        public string ProfileIssuesJSON { get; set; } = string.Empty;
 
         public HomeModel(Holonet.Jedi.Academy.BL.Data.AcademyContext context, ILogger<HomeModel> logger, IOptions<SiteConfiguration> options, IHttpContextAccessor httpContextAccessor, IMemoryCache memoryCache) : base(options, httpContextAccessor)
         {

@@ -6,6 +6,6 @@ namespace Holonet.Jedi.Academy.Entities.Configuration
 {
     public class DBConnections
     {
-        public string JediAcademyAppDB { get; set; }
-    }
+        public string JediAcademyAppDB { get; set; } = string.Empty;
+	}
 }

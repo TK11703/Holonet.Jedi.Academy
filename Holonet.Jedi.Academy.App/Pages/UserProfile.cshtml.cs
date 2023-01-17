@@ -28,17 +28,17 @@ namespace Holonet.Jedi.Academy.App.Pages
 		}
 
 		[BindProperty]
-		public UserProfileVM UserProfile { get; set; }
+		public UserProfileVM UserProfile { get; set; } = default!;
 
-		public Student Student { get; set; }
+		public Student Student { get; set; } = default!;
 
-		public List<QuestXP> PersonalQuests { get; set; }
+		public List<QuestXP> PersonalQuests { get; set; } = default!;
 
-		public List<KnowledgeXP> PersonalSkills { get; set; }
+		public List<KnowledgeXP> PersonalSkills { get; set; } = default!;
 
-		public List<ForcePowerXP> ForcePowers { get; set; }
+		public List<ForcePowerXP> ForcePowers { get; set; } = default!;
 
-		public List<RewardPoint> RewardPoints { get; set; }
+		public List<RewardPoint> RewardPoints { get; set; } = default!;
 
 		public string RewardPointOutput
 		{

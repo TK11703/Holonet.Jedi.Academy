@@ -2,6 +2,7 @@ using Holonet.Jedi.Academy.BL.Data;
 using Holonet.Jedi.Academy.Entities.App;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace Holonet.Jedi.Academy.Api.Controllers
 {
@@ -39,6 +40,22 @@ namespace Holonet.Jedi.Academy.Api.Controllers
 			}
 
 			return planet;
+		}
+
+		[Route("api/[controller]/[action]")]
+		// GET: api/[controller]/[action]
+		[HttpGet]
+		public async Task<ActionResult<Planet>> GetRandom()
+		{
+			var planets = await _context.Planets.ToListAsync();
+			if(planets == null)
+			{
+				return NotFound();
+			}
+			var random = new Random();
+			int index = random.Next(planets.Count);
+
+			return planets[index];
 		}
 
 		// PUT: api/[controller]/5

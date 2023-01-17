@@ -29,9 +29,9 @@ namespace Holonet.Jedi.Academy.App.Pages.Experience
 			_userManager = userManager;
 		}
 
-		public Knowledge Knowledge { get; set; }
+		public Knowledge Knowledge { get; set; } = default!;
 		public int ID { get; set; }
-		public KnowledgeXP KnowledgeParticipation { get; set; }
+		public KnowledgeXP KnowledgeParticipation { get; set; } = default!;
 
 		public bool CanJoin { get; set; } = false;
 		public bool CanCreateEdit { get; set; } = false;

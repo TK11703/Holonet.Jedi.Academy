@@ -27,13 +27,13 @@ namespace Holonet.Jedi.Academy.App.Pages.Members
 			_userManager = userManager;
 		}
 
-		public Student Student { get; set; }
+		public Student Student { get; set; } = default!;
 
-		public List<QuestXP> PersonalQuests { get; set; }
+		public List<QuestXP> PersonalQuests { get; set; } = default!;
 
-		public List<KnowledgeXP> PersonalSkills { get; set; }
+		public List<KnowledgeXP> PersonalSkills { get; set; } = default!;
 
-		public List<ForcePowerXP> ForcePowers { get; set; }
+		public List<ForcePowerXP> ForcePowers { get; set; } = default!;
 
 		public bool CanCreateEdit { get; set; } = false;
 

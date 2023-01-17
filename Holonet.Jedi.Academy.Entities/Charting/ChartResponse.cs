@@ -9,18 +9,18 @@ namespace Holonet.Jedi.Academy.Entities.Charting
     public class ChartResponse<T>
     {
         [DataMember]
-        public string title { get; set; }
+        public string title { get; set; } = string.Empty;
 
         [DataMember]
         public string type { get; set; }
 
         [DataMember]
-        public string xAxisLabel { get; set; }
+        public string xAxisLabel { get; set; } = string.Empty;
 
         [DataMember]
-        public string yAxisLabel { get; set; }
+        public string yAxisLabel { get; set; } = string.Empty;
 
-        [DataMember]
+		[DataMember]
         public List<string> labels { get; set; }
 
         [DataMember]

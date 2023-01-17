@@ -26,21 +26,22 @@ namespace Holonet.Jedi.Academy.App.Pages.Members
         {
             _context = context;
 			_userManager = userManager;
+			SearchFilterDesc = new List<string>();
 		}
 
-        public string NameSort { get; set; }
-        public string SpeciesSort { get; set; }
-        public string PlanetSort { get; set; }
-        public string ExpSort { get; set; }
-        public string RankSort { get; set; }
-        public string NameFilter { get; set; }
+        public string NameSort { get; set; } = string.Empty;
+        public string SpeciesSort { get; set; } = string.Empty;
+		public string PlanetSort { get; set; } = string.Empty;
+		public string ExpSort { get; set; } = string.Empty;
+		public string RankSort { get; set; } = string.Empty;
+		public string NameFilter { get; set; } = string.Empty;
 		public int? RankFilter { get; set; }
 		public int? SpeciesFilter { get; set; }
 		public int? PlanetFilter { get; set; }
 
-		public string CurrentSort { get; set; }
+		public string CurrentSort { get; set; } = string.Empty;
 
-        public List<string> SearchFilterDesc { get; set; }
+		public List<string> SearchFilterDesc { get; set; }
 
         public PaginatedList<Student> Students { get; set; } = default!;
 
@@ -173,8 +174,8 @@ namespace Holonet.Jedi.Academy.App.Pages.Members
                     break;
             }
 
-            var pageSize = Config.SiteSettings.PageSize;
-            Students = await PaginatedList<Student>.CreateAsync(studentsIQ.AsNoTracking(), pageIndex ?? 1, pageSize);
+			var pageSize = (Config.SiteSettings != null) ? Config.SiteSettings.PageSize : 10;
+			Students = await PaginatedList<Student>.CreateAsync(studentsIQ.AsNoTracking(), pageIndex ?? 1, pageSize);
         }
 
 		private async Task<bool> CanCreateEditItem()

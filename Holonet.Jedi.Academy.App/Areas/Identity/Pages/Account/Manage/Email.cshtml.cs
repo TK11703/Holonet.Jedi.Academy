@@ -40,9 +40,9 @@ namespace Holonet.Jedi.Academy.App.Areas.Identity.Pages.Account.Manage
         public string StatusMessage { get; set; } = String.Empty;
 
         [BindProperty]
-        public InputModel Input { get; set; }
+        public InputModel Input { get; set; } = default!;
 
-        public class InputModel
+		public class InputModel
         {
             [Required]
             [EmailAddress]

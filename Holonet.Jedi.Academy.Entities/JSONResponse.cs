@@ -14,7 +14,7 @@ namespace Holonet.Jedi.Academy.Entities
             set { m_success = value; }
         }
 
-        private List<string> m_errors = null;
+        private List<string> m_errors;
         [DataMember]
         public List<string> Errors
         {
@@ -24,7 +24,7 @@ namespace Holonet.Jedi.Academy.Entities
 
         public JSONResponse()
         {
-            this.Errors = new List<string>();
+			m_errors = new List<string>();
         }
 
     }

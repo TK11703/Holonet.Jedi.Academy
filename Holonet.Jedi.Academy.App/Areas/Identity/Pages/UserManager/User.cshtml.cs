@@ -32,9 +32,9 @@ namespace Holonet.Jedi.Academy.App.Areas.Identity.Pages.UserManager
         }
 
         [BindProperty]
-        public List<ManageUserRolesViewModel> UserRoleAssignment { get; set; }        
+        public List<ManageUserRolesViewModel> UserRoleAssignment { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync()
+		public async Task<IActionResult> OnGetAsync()
         {
             var user = await _userManager.FindByIdAsync(ID);
             if (user == null)

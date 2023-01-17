@@ -23,9 +23,9 @@ namespace Holonet.Jedi.Academy.App.Pages.Quests
         }
 
         [BindProperty]
-      public Quest Quest { get; set; }
+      public Quest Quest { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+		public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null || _context.Quests == null)
             {

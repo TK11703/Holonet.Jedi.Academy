@@ -12,12 +12,12 @@ namespace Holonet.Jedi.Academy.App.Pages.Errors
     {
         private readonly ILogger _logger;
 
-        public string RequestId { get; set; }
+        public string RequestId { get; set; } = string.Empty;
         public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
 
-        public string ErrorStatusCode { get; set; }
+        public string ErrorStatusCode { get; set; } = string.Empty;
 
-        public string OriginalURL { get; set; }
+        public string OriginalURL { get; set; } = string.Empty;
         public bool ShowOriginalURL => !string.IsNullOrEmpty(OriginalURL);
 
         public HttpErrorModel(ILogger<HttpErrorModel> logger)

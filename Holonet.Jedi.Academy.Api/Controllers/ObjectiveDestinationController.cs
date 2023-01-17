@@ -41,6 +41,22 @@ namespace Holonet.Jedi.Academy.Api.Controllers
 			return ObjectiveDestination;
 		}
 
+		[Route("api/[controller]/[action]")]
+		// GET: api/[controller]/[action]
+		[HttpGet]
+		public async Task<ActionResult<ObjectiveDestination>> GetRandom()
+		{
+			var planets = await _context.Planets.ToListAsync();
+			if (planets == null)
+			{
+				return NotFound();
+			}
+			var random = new Random();
+			int index = random.Next(planets.Count);
+			var objDest = new ObjectiveDestination() { Planet = planets[index], PlanetId= planets[index].Id };
+			return objDest;
+		}
+
 		// PUT: api/[controller]/5
 		// To protect from overposting attacks, enable the specific properties you want to bind to, for
 		// more details, see https://go.microsoft.com/fwlink/?linkid=2123754.

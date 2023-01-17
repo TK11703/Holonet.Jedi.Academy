@@ -15,37 +15,37 @@ namespace Holonet.Jedi.Academy.BL.Data
         {
         }
 
-        public DbSet<Student> Students { get; set; }
+		public DbSet<Student> Students { get; set; } = null!;
 
-        public DbSet<Quest> Quests { get; set; }
-		
-		public DbSet<QuestObjective> QuestObjectives { get; set; }
-		public DbSet<Objective> Objectives { get; set; }
-		public DbSet<ObjectiveDestination> ObjectiveDestinations { get; set; }
+        public DbSet<Quest> Quests { get; set; } = null!;
 
-		public DbSet<QuestXP> QuestParticipation { get; set; }
-		//public DbSet<QuestDestination> QuestDestinations { get; set; }
-		
-		public DbSet<CompletedObjective> CompletedObjectives { get; set; }
+		public DbSet<QuestObjective> QuestObjectives { get; set; } = null!;
+		public DbSet<Objective> Objectives { get; set; } = null!;
+		public DbSet<ObjectiveDestination> ObjectiveDestinations { get; set; } = null!;
 
-		public DbSet<Rank> Ranks { get; set; }
+		public DbSet<QuestXP> QuestParticipation { get; set; } = null!;
+		//public DbSet<QuestDestination> QuestDestinations { get; set; } = null!;
 
-        public DbSet<ForcePower> ForcePowers { get; set; }
-		public DbSet<ForcePowerXP> ForcePowersLearned { get; set; }
+		public DbSet<CompletedObjective> CompletedObjectives { get; set; } = null!;
 
-		public DbSet<TerminationReason> TerminationReasons { get; set; }
+		public DbSet<Rank> Ranks { get; set; } = null!;
 
-		public DbSet<Planet> Planets { get; set; }
+		public DbSet<ForcePower> ForcePowers { get; set; } = null!;
+		public DbSet<ForcePowerXP> ForcePowersLearned { get; set; } = null!;
 
-		public DbSet<Species> AlienRaces { get; set; }
+		public DbSet<TerminationReason> TerminationReasons { get; set; } = null!;
 
-		public DbSet<Knowledge> KnowledgeOpportunities { get; set; }
-		public DbSet<KnowledgeXP> KnowledgeLearned { get; set; }
+		public DbSet<Planet> Planets { get; set; } = null!;
 
-		public DbSet<UserProfile> UserProfiles { get; set; }
+		public DbSet<Species> AlienRaces { get; set; } = null!;
 
-		public DbSet<Notification> Notifications { get; set; }
-		public DbSet<RewardPoint> RewardPoints { get; set; }
+		public DbSet<Knowledge> KnowledgeOpportunities { get; set; } = null!;
+		public DbSet<KnowledgeXP> KnowledgeLearned { get; set; } = null!;
+
+		public DbSet<UserProfile> UserProfiles { get; set; } = null!;
+
+		public DbSet<Notification> Notifications { get; set; } = null!;
+		public DbSet<RewardPoint> RewardPoints { get; set; } = null!;
 
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)

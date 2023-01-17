@@ -23,9 +23,9 @@ namespace Holonet.Jedi.Academy.App.Areas.Identity.Pages.UserManager
         }
 
         [BindProperty]
-        public List<UserRolesViewModel> RoleCollection { get; set; }
+        public List<UserRolesViewModel> RoleCollection { get; set; } = default!;
 
-        public async Task<IActionResult> OnGet()
+		public async Task<IActionResult> OnGet()
         {
             var users = await _userManager.Users.ToListAsync();
             RoleCollection = new List<UserRolesViewModel>();
@@ -122,6 +122,6 @@ namespace Holonet.Jedi.Academy.App.Areas.Identity.Pages.UserManager
                 ModelState.AddModelError("", error.Description);
         }
 
-        public List<UserRolesViewModel> UserRolesViewModel { get; set; }
-    }
+        public List<UserRolesViewModel> UserRolesViewModel { get; set; } = default!;
+	}
 }

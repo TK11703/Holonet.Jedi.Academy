@@ -31,18 +31,18 @@ namespace Holonet.Jedi.Academy.App.Pages.Quests
 			_userManager = userManager;
 		}
 
-		public Quest Quest { get; set; }
+		public Quest Quest { get; set; } = default!;
 
 		public int ID { get; set; }
 
-		public QuestXP QuestParticipation { get; set; }
+		public QuestXP QuestParticipation { get; set; } = default!;
 
 		public bool CanJoin { get; set; } = false;
 
 		public bool CanCreateEdit { get; set; } = false;
 
 		[BindProperty]
-		public int[] CompletedObjectiveIds { get; set; }
+		public int[] CompletedObjectiveIds { get; set; } = default!;
 
 		public async Task<IActionResult> OnGetAsync(int? id)
 		{

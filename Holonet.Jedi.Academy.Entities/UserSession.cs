@@ -6,7 +6,7 @@ namespace Holonet.Jedi.Academy.Entities
 {
     public class UserSession
     {
-        public UserAccount ActiveUser { get; set; } = null;
+        public UserAccount ActiveUser { get; set; }
 
         public bool ContainsValidUserAccount
         {

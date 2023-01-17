@@ -16,11 +16,11 @@ namespace Holonet.Jedi.Academy.App.Pages.Errors
     public class PageErrorModel : PageModel
     {
         private readonly ILogger _logger;
-        public string RequestId { get; set; }
+        public string RequestId { get; set; } = string.Empty;
         public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
-        public string RequestDetails { get; set; }
+        public string RequestDetails { get; set; } = string.Empty;
         public bool ShowRequestDetails => !string.IsNullOrEmpty(RequestDetails);
-        public string ErrorDetails { get; set; }
+        public string ErrorDetails { get; set; } = string.Empty;
         public bool ShowErrorDetails => !string.IsNullOrEmpty(ErrorDetails);
 
         public PageErrorModel(ILogger<PageErrorModel> logger)

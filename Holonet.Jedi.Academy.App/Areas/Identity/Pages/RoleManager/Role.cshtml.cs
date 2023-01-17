@@ -34,9 +34,9 @@ namespace Holonet.Jedi.Academy.App.Areas.Identity.Pages.RoleManager
         }
 
         [BindProperty]
-        public RoleInputModel Input { get; set; }        
+        public RoleInputModel Input { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync()
+		public async Task<IActionResult> OnGetAsync()
         {
             Input = new RoleInputModel();
             if (!ID.Equals("-1"))
@@ -131,6 +131,6 @@ namespace Holonet.Jedi.Academy.App.Areas.Identity.Pages.RoleManager
         }
 
         [BindProperty(SupportsGet = true)]
-        public string ID { get; set; }
+        public string ID { get; set; } = string.Empty;
     }
 }

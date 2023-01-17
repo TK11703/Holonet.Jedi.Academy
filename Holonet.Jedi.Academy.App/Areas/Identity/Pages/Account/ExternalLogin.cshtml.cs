@@ -38,9 +38,9 @@ namespace Holonet.Jedi.Academy.App.Areas.Identity.Pages.Account
         }
 
         [BindProperty]
-        public InputModel Input { get; set; }
+        public InputModel Input { get; set; } = default!;
 
-        public string ProviderDisplayName { get; set; } = String.Empty;
+		public string ProviderDisplayName { get; set; } = String.Empty;
 
         public string ReturnUrl { get; set; } = String.Empty;
 

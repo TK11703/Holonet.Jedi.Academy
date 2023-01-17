@@ -27,9 +27,9 @@ namespace Holonet.Jedi.Academy.App.Areas.Identity.Pages.Account
         }
 
         [BindProperty]
-        public InputModel Input { get; set; }
+        public InputModel Input { get; set; } = default!;
 
-        public class InputModel
+		public class InputModel
         {
             [Required]
             [EmailAddress]

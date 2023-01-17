@@ -10,12 +10,15 @@ namespace Holonet.Jedi.Academy.BL.Session
     {
         private const string SESSIONNAME = "JediAcademyApp_Session";
         private UserSession? _sessionObj;
-        private HttpContext _currentContext;
+        private HttpContext? _currentContext;
 
-        public SessionHandler(HttpContext context)
+        public SessionHandler(HttpContext? context)
         {
             _currentContext = context;
-            _sessionObj = context.Session.Get<UserSession>(SESSIONNAME);
+            if (context != null)
+            {
+                _sessionObj = context.Session.Get<UserSession>(SESSIONNAME);
+            }
         }
 
         public bool ContainsActiveSession
@@ -56,18 +59,24 @@ namespace Holonet.Jedi.Academy.BL.Session
         public bool SaveSession(UserSession sessionObj)
         {
             bool completed = false;
-            _currentContext.Session.Set<UserSession>(SESSIONNAME, sessionObj);
-            _sessionObj = _currentContext.Session.Get<UserSession>(SESSIONNAME);
-            if (ContainsActiveSession)
+            if (_currentContext != null)
             {
-                completed = true;
+                _currentContext.Session.Set<UserSession>(SESSIONNAME, sessionObj);
+                _sessionObj = _currentContext.Session.Get<UserSession>(SESSIONNAME);
+                if (ContainsActiveSession)
+                {
+                    completed = true;
+                }
             }
             return completed;
         }
 
         public bool ClearSession()
         {
-            _currentContext.Session.Clear();
+            if (_currentContext != null)
+            {
+                _currentContext.Session.Clear();
+            }
             return true;
         }
     }

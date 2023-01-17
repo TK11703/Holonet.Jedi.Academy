@@ -12,7 +12,7 @@ namespace Holonet.Jedi.Academy.Entities.Models
 		public int Id { get; set; }
 
 		[Required]
-		public string UserId { get; set; }
+		public string UserId { get; set; } = string.Empty;
 
 		[Required]
 		[StringLength(100, ErrorMessage = "The {0} must be at least {2} and at most {1} characters.", MinimumLength = 2)]

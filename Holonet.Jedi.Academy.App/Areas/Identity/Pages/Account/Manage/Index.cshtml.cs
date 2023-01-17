@@ -34,9 +34,9 @@ namespace Holonet.Jedi.Academy.App.Areas.Identity.Pages.Account.Manage
         public string UserNameChangeLimitMessage { get; set; } = string.Empty;
 
         [BindProperty]
-        public InputModel Input { get; set; }
+        public InputModel Input { get; set; } = default!;
 
-        public class InputModel
+		public class InputModel
         {
             [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 2)]

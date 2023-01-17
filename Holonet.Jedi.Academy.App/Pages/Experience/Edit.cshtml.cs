@@ -66,25 +66,26 @@ namespace Holonet.Jedi.Academy.App.Pages.Experience
 				return Page();
 			}
 			KnowledgeDomain = await _context.KnowledgeOpportunities.FirstOrDefaultAsync(m => m.Id.Equals(id));
-			KnowledgeDomain.Populate(Knowledge);
-
-			_context.Update(KnowledgeDomain);
-
-			try
+			if (KnowledgeDomain != null)
 			{
-				await _context.SaveChangesAsync();
-			}
-			catch (DbUpdateConcurrencyException)
-			{
-				if (!await KnowledgeExistsAsync(Knowledge.Id))
+				KnowledgeDomain.Populate(Knowledge);
+				_context.Update(KnowledgeDomain);
+				try
 				{
-					return NotFound();
+					await _context.SaveChangesAsync();
 				}
-				else
+				catch (DbUpdateConcurrencyException)
 				{
-					throw;
+					if (!await KnowledgeExistsAsync(Knowledge.Id))
+					{
+						return NotFound();
+					}
+					else
+					{
+						throw;
+					}
 				}
-			}
+			}			
 
 			return Page();
 		}
@@ -93,7 +94,10 @@ namespace Holonet.Jedi.Academy.App.Pages.Experience
 		{
 			KnowledgeDomain = await _context.KnowledgeOpportunities.FirstOrDefaultAsync(m => m.Id.Equals(id));
 			Knowledge = new KnowledgeVM();
-			Knowledge.Populate(KnowledgeDomain);
+			if (KnowledgeDomain != null)
+			{
+				Knowledge.Populate(KnowledgeDomain);
+			}
 		}
 
 		private async Task<bool> KnowledgeExistsAsync(int id)

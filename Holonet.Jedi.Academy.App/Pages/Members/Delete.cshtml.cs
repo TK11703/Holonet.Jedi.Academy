@@ -23,7 +23,7 @@ namespace Holonet.Jedi.Academy.App.Pages.Members
         }
 
         [BindProperty]
-        public Student Student { get; set; }
+        public Student Student { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {

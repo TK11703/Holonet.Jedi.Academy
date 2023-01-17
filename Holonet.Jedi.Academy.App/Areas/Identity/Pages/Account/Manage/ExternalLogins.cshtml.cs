@@ -23,11 +23,11 @@ namespace Holonet.Jedi.Academy.App.Areas.Identity.Pages.Account.Manage
             _signInManager = signInManager;
         }
 
-        public IList<UserLoginInfo> CurrentLogins { get; set; }
+        public IList<UserLoginInfo> CurrentLogins { get; set; } = default!;
 
-        public IList<AuthenticationScheme> OtherLogins { get; set; }
+		public IList<AuthenticationScheme> OtherLogins { get; set; } = default!;
 
-        public bool ShowRemoveButton { get; set; }
+		public bool ShowRemoveButton { get; set; }
 
         [TempData]
         public string StatusMessage { get; set; } = String.Empty;

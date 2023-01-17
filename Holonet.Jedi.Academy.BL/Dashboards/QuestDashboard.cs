@@ -63,7 +63,7 @@ namespace Holonet.Jedi.Academy.BL.Dashboards
 			double avgRotations = 0;
 			if (questAcceptances.Count() > 0)
 			{
-				avgRotations = questAcceptances.Average(x => (x.CompletedOn.Value.Date - x.StartedOn.Date).TotalDays);
+				avgRotations = questAcceptances.Where(x=>x.IsComplete).Average(x => (x.CompletedOn!.Value.Date - x.StartedOn.Date).TotalDays);
 			}
 			return avgRotations;
 		}
@@ -72,7 +72,8 @@ namespace Holonet.Jedi.Academy.BL.Dashboards
 		{
 			string mostPopularPlanetName = string.Empty;
 			var items = from destination in destinations
-					   group destination by destination.Planet.Name into grp
+						where destination.Planet != null
+					   group destination by destination.Planet!.Name into grp
 					   select new { key = grp.Key, total = grp.Count() };
 			if(items.Count() > 0)
 			{

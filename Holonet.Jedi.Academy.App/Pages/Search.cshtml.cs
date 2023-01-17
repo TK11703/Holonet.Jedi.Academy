@@ -22,12 +22,12 @@ namespace Holonet.Jedi.Academy.App.Pages
 			_context = context;
 		}
 
-		public string NameSort { get; set; }
-		public string TypeSort { get; set; }
-		public string CurrentSort { get; set; }
-		public string SearchString { get; set; }
+		public string NameSort { get; set; } = string.Empty;
+		public string TypeSort { get; set; } = string.Empty;
+		public string CurrentSort { get; set; } = string.Empty;
+		public string SearchString { get; set; } = string.Empty;
 
-		public PaginatedList<SearchResult> Results { get; set; }
+		public PaginatedList<SearchResult> Results { get; set; } = default!;
 
 		public async Task OnGetAsync(string search, string sortOrder, int? pageIndex)
 		{
@@ -58,7 +58,7 @@ namespace Holonet.Jedi.Academy.App.Pages
 					break;
 			}
 
-			var pageSize = Config.SiteSettings.PageSize;
+			var pageSize = (Config.SiteSettings != null) ? Config.SiteSettings.PageSize : 10;
 			Results = await PaginatedList<SearchResult>.CreateAsync(resultsIQ, pageIndex ?? 1, pageSize);
 		}
 	}

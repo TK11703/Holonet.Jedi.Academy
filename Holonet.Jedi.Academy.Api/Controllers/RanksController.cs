@@ -41,6 +41,22 @@ namespace Holonet.Jedi.Academy.Api.Controllers
 			return rank;
 		}
 
+		[Route("api/[controller]/[action]")]
+		// GET: api/[controller]/[action]
+		[HttpGet]
+		public async Task<ActionResult<Rank>> GetRandom()
+		{
+			var ranks = await _context.Ranks.ToListAsync();
+			if (ranks == null)
+			{
+				return NotFound();
+			}
+			var random = new Random();
+			int index = random.Next(ranks.Count);
+
+			return ranks[index];
+		}
+
 		// PUT: api/[controller]/5
 		// To protect from overposting attacks, enable the specific properties you want to bind to, for
 		// more details, see https://go.microsoft.com/fwlink/?linkid=2123754.

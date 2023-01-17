@@ -23,9 +23,9 @@ namespace Holonet.Jedi.Academy.App.Pages.Experience
         }
 
         [BindProperty]
-      public Knowledge Knowledge { get; set; }
+      public Knowledge Knowledge { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+		public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null || _context.KnowledgeOpportunities == null)
             {

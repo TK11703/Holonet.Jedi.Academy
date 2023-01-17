@@ -30,6 +30,7 @@ namespace Holonet.Jedi.Academy.App.Pages.Quests
 		{
             _context = context;
 			_userManager = userManager;
+			SelectedObjectiveIds = new int[0];
 		}
 
         [BindProperty]
@@ -115,8 +116,11 @@ namespace Holonet.Jedi.Academy.App.Pages.Quests
 				.Include(q => q.Objectives).ThenInclude(qo => qo.Objective).ThenInclude(o => o.Destinations).ThenInclude(d => d.Planet)
 				.FirstOrDefaultAsync(m => m.Id.Equals(id));
             Quest = new QuestVM();
-            Quest.Populate(QuestDomain);
-            SelectedObjectiveIds = QuestDomain.Objectives.Select(x => x.ObjectiveId).ToArray();
+            if (QuestDomain != null)
+            {
+                Quest.Populate(QuestDomain);
+                SelectedObjectiveIds = QuestDomain.Objectives.Select(x => x.ObjectiveId).ToArray();
+            }
 			ViewData["Ranks"] = new SelectList(await _context.Ranks.OrderBy(x => x.RankLevel).ToArrayAsync(), "Id", "Name", Quest.RankId);
 			ViewData["Objectives"] = new SelectList(await _context.Objectives.Where(x => !x.Archived).OrderBy(x => x.Name).ToArrayAsync(), "Id", "Name");
 		}

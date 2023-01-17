@@ -15,7 +15,7 @@ namespace Holonet.Jedi.Academy.Entities
 
         [Required]
         [StringLength(256, ErrorMessage = "The {0} must be less than {1} characters.")]
-        public string UserId { get; set; }
+        public string UserId { get; set; } = string.Empty;
 
         [Required]
         public int StudentId { get; set; }

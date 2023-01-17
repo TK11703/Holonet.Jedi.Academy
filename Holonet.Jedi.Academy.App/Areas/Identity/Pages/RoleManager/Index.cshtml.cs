@@ -48,6 +48,6 @@ namespace Holonet.Jedi.Academy.App.Areas.Identity.Pages.RoleManager
                 ModelState.AddModelError("", error.Description);
         }
 
-        public IEnumerable<IdentityRole> Roles { get; set; }
-    }
+        public IEnumerable<IdentityRole> Roles { get; set; } = default!;
+	}
 }

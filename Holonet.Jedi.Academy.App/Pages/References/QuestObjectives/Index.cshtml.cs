@@ -34,10 +34,11 @@ namespace Holonet.Jedi.Academy.App.Pages.References.QuestObjectives
 		{
 			_context = context;
 			_userManager = userManager;
+			SelectedDestinationIds = new int[0];
 		}
-		public string NameSort { get; set; }
-		public string SearchString { get; set; }
-		public string CurrentSort { get; set; }
+		public string NameSort { get; set; } = string.Empty;
+		public string SearchString { get; set; } = string.Empty;
+		public string CurrentSort { get; set; } = string.Empty;
 		public PaginatedList<Objective> QuestObjectives { get; set; } = default!;
 
 		[BindProperty]
@@ -140,7 +141,7 @@ namespace Holonet.Jedi.Academy.App.Pages.References.QuestObjectives
 						break;
 				}
 
-				var pageSize = Config.SiteSettings.PageSize;
+				var pageSize = (Config.SiteSettings != null) ? Config.SiteSettings.PageSize : 10;
 				QuestObjectives = await PaginatedList<Objective>.CreateAsync(objectivesIQ.AsNoTracking(), pageIndex ?? 1, pageSize);
 				if (id.HasValue)
 				{

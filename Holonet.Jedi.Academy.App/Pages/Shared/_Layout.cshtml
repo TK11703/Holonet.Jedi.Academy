@@ -95,7 +95,7 @@
 	</footer>
 	<!-- Session Timeout Markup -->
 	@await Html.PartialAsync("~/Pages/Shared/SessionTimeoutAlert.cshtml")
-	@Html.Hidden("sessionTimeoutMins", @Config.SiteSettings.SessionTimeout)
+	@Html.Hidden("sessionTimeoutMins", @Config.SiteSettings != null ? Config.SiteSettings.SessionTimeout : 10)
 	<script type="text/javascript" defer src="~/lib/fontawesome/v5/js/solid.min.js"></script>
 	<script type="text/javascript" defer src="~/lib/fontawesome/v5/js/fontawesome.min.js"></script>
 	<script type="text/javascript" src="~/lib/jquery/dist/jquery.min.js"></script>
