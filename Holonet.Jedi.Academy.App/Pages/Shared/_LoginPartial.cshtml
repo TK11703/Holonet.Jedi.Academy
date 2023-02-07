@@ -5,16 +5,30 @@
 @inject SignInManager<JediAcademyAppUser> SignInManager
 @inject UserManager<JediAcademyAppUser> UserManager
 @{
-    JediAcademyAppUser user = UserManager.GetUserAsync(User).Result;
+	bool isSignedOn = SignInManager.IsSignedIn(User);
+	JediAcademyAppUser? user = null;
+	string welcomeName = User.Identity.Name;
+	if (isSignedOn)
+	{
+		user = UserManager.GetUserAsync(User).Result;
+		if (user != null && !string.IsNullOrWhiteSpace(user.FirstName))
+		{
+			welcomeName = user.FirstName;
+		}
+		else if (user != null && !string.IsNullOrWhiteSpace(user.UserName))
+		{
+			welcomeName = user.UserName;
+		}
+	}
 }
 
-@if (SignInManager.IsSignedIn(User))
+@if (isSignedOn)
 {
 	<li class="nav-item">
 		<a href="#" class="nav-link link-dark text-decoration-none dropdown-toggle" id="accountDropdown" data-bs-toggle="dropdown" aria-expanded="false" title="Click to access your profile menu.">
 			@if (user != null && user.ProfilePicture != null)
 			{
-				<img alt="A user selected profile image" class="rounded-circle" height="24" width="24" src="data:image/*;base64,@(Convert.ToBase64String(UserManager.GetUserAsync(User).Result.ProfilePicture))">
+				<img alt="A user selected profile image" class="rounded-circle" height="24" width="24" src="data:image/*;base64,@(Convert.ToBase64String(user.ProfilePicture))">
 			}
 			else
 			{

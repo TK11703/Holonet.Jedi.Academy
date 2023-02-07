@@ -126,7 +126,7 @@ namespace Holonet.Jedi.Academy.App.Areas.Identity.Pages.Account.Manage
             var firstName = user.FirstName;
             if (Input.FirstName != firstName)
             {
-                user.FirstName = firstName;
+                user.FirstName = Input.FirstName;
                 var setFirstNameResult = await _userManager.UpdateAsync(user);
                 if (!setFirstNameResult.Succeeded)
                 {
@@ -138,7 +138,7 @@ namespace Holonet.Jedi.Academy.App.Areas.Identity.Pages.Account.Manage
             var lastName = user.LastName;
             if (Input.LastName != lastName)
             {
-                user.LastName = lastName;
+                user.LastName = Input.LastName;
                 var setLastNameResult = await _userManager.UpdateAsync(user);
                 if (!setLastNameResult.Succeeded)
                 {
