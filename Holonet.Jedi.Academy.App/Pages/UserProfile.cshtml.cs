@@ -95,7 +95,7 @@ namespace Holonet.Jedi.Academy.App.Pages
 				}
 				else
 				{
-					Student = new Student() { Id = 0 };
+					Student = new Student() { Id = 0, Rank = await GetInitialRank() };
 				}
 				RewardPoints = await _context.RewardPoints.Where(x => x.StudentId.Equals(StudentId)).ToListAsync();				
 				ButtonAction = "Update";
@@ -109,7 +109,7 @@ namespace Holonet.Jedi.Academy.App.Pages
 			else
 			{
 				StudentId = 0;
-				Student = new Student() { Id=0 };
+				Student = new Student() { Id=0, Rank = await GetInitialRank() };
 				UserProfile.UserId = currentUser.UserId;
 				UserProfile.FirstName = currentUser.FirstName;
 				UserProfile.LastName = currentUser.LastName;
@@ -132,7 +132,6 @@ namespace Holonet.Jedi.Academy.App.Pages
 			}
 			if (await UserProfileExists(UserProfile.Id))
 			{
-				ButtonAction = "Update";
 				var profileToUpdate = await _context.UserProfiles.FindAsync(UserProfile.Id);
 				if (profileToUpdate == null)
 				{
@@ -160,7 +159,6 @@ namespace Holonet.Jedi.Academy.App.Pages
 			}
 			else
 			{
-				ButtonAction = "Save";
 				var emptyUserProfile = new UserProfile();
 				emptyUserProfile.UserId = UserProfile.UserId;
 				emptyUserProfile.Student = new Student();
@@ -170,7 +168,7 @@ namespace Holonet.Jedi.Academy.App.Pages
 				emptyUserProfile.Student.PlanetId = UserProfile.PlanetId;
 				emptyUserProfile.Student.Experience = 0;
 				emptyUserProfile.Student.InitiatedOn = DateTime.Now;
-				emptyUserProfile.Student.Rank = await _context.Ranks.Where(x => x.RankLevel.Equals(1)).FirstOrDefaultAsync();
+				emptyUserProfile.Student.Rank = await GetInitialRank();
 				if (emptyUserProfile.Student.Rank != null)
 				{
 					emptyUserProfile.Student.RankId = emptyUserProfile.Student.Rank.Id;
@@ -206,7 +204,7 @@ namespace Holonet.Jedi.Academy.App.Pages
 				{
 					throw new Exception("The student has already obtained this force power.");
 				}
-				if (student.Rank.RankLevel < forcePower.MinimumRank.RankLevel)
+				if (student.Rank != null && forcePower.MinimumRank != null && student.Rank.RankLevel < forcePower.MinimumRank.RankLevel)
 				{
 					throw new Exception("The student does not currently meet the minimum rank level for to learn this force power. Please try again later.");
 				}
@@ -235,6 +233,12 @@ namespace Holonet.Jedi.Academy.App.Pages
 		private async Task<bool> UserProfileExists(string userId)
 		{
 			return await _context.UserProfiles.AnyAsync(e => e.UserId.Equals(userId));
+		}
+
+		private async Task<Rank> GetInitialRank()
+		{
+			Rank? initialRank = await _context.Ranks.OrderBy(x => x.RankLevel).FirstOrDefaultAsync();
+			return (initialRank != null) ? initialRank : new Rank();
 		}
 
 		private void PopulatePersonalProperties(Entities.UserProfile userProfile)

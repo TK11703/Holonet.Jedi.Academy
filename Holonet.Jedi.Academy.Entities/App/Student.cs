@@ -78,7 +78,7 @@ namespace Holonet.Jedi.Academy.Entities.App
 		{
 			get
 			{
-				if (Rank != null)
+				if (Rank != null && Rank.Maximum > 0)
 				{
 					return Math.Round((((double)Experience / Rank.Maximum) * 100), 0);
 				}
