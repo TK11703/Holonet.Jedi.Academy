@@ -14,6 +14,7 @@ namespace Holonet.Jedi.Academy.Entities.Configuration
         public ContactInformation? ContactInformation { get; set; }
         public IdentityPlatformSettings? IdentityPlatform { get; set; }
         public SiteSettings? SiteSettings { get; set; }
-        public DBConnections? DbConnectionStrings { get; set; }
+		public MailSettings? MailSettings { get; set; }
+		public DBConnections? DbConnectionStrings { get; set; }
     }
 }

@@ -88,7 +88,9 @@ void ConfigureServices(IServiceCollection services)
 
     services.AddDefaultIdentity<JediAcademyAppUser>(options => options.SignIn.RequireConfirmedAccount = true)
         .AddRoles<IdentityRole>().AddEntityFrameworkStores<JediAcademyAppUserContext>();
-
+	
+    services.AddTransient<IEmailSender, EmailSender>();
+	
     services.Configure<IdentityOptions>(options =>
     {
         //Signing settings

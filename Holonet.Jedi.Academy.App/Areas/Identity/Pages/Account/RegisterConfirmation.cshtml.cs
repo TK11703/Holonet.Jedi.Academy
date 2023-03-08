@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using Holonet.Jedi.Academy.App.Middleware;
 
 namespace Holonet.Jedi.Academy.App.Areas.Identity.Pages.Account
 {
@@ -14,9 +15,9 @@ namespace Holonet.Jedi.Academy.App.Areas.Identity.Pages.Account
     public class RegisterConfirmationModel : PageModel
     {
         private readonly UserManager<JediAcademyAppUser> _userManager;
-        private readonly IEmailSender _sender;
+        private readonly EmailSender _sender;
 
-        public RegisterConfirmationModel(UserManager<JediAcademyAppUser> userManager, IEmailSender sender)
+        public RegisterConfirmationModel(UserManager<JediAcademyAppUser> userManager, EmailSender sender)
         {
             _userManager = userManager;
             _sender = sender;

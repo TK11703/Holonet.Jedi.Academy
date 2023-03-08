@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using Holonet.Jedi.Academy.App.Middleware;
 
 namespace Holonet.Jedi.Academy.App.Areas.Identity.Pages.Account
 {
@@ -22,14 +23,14 @@ namespace Holonet.Jedi.Academy.App.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<JediAcademyAppUser> _signInManager;
         private readonly UserManager<JediAcademyAppUser> _userManager;
-        private readonly IEmailSender _emailSender;
+        private readonly EmailSender _emailSender;
         private readonly ILogger<ExternalLoginModel> _logger;
 
         public ExternalLoginModel(
             SignInManager<JediAcademyAppUser> signInManager,
             UserManager<JediAcademyAppUser> userManager,
             ILogger<ExternalLoginModel> logger,
-            IEmailSender emailSender)
+            EmailSender emailSender)
         {
             _signInManager = signInManager;
             _userManager = userManager;

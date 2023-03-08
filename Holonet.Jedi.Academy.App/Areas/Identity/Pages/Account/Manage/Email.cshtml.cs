@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using Holonet.Jedi.Academy.App.Middleware;
 
 namespace Holonet.Jedi.Academy.App.Areas.Identity.Pages.Account.Manage
 {
@@ -18,12 +19,12 @@ namespace Holonet.Jedi.Academy.App.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<JediAcademyAppUser> _userManager;
         private readonly SignInManager<JediAcademyAppUser> _signInManager;
-        private readonly IEmailSender _emailSender;
+        private readonly EmailSender _emailSender;
 
         public EmailModel(
             UserManager<JediAcademyAppUser> userManager,
             SignInManager<JediAcademyAppUser> signInManager,
-            IEmailSender emailSender)
+            EmailSender emailSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;
