@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using System.Net.Mail;
 
 namespace Holonet.Jedi.Academy.App.Areas.Identity.Pages.Account
 {
@@ -44,22 +45,38 @@ namespace Holonet.Jedi.Academy.App.Areas.Identity.Pages.Account
             var result = await _userManager.ChangeEmailAsync(user, email, code);
             if (!result.Succeeded)
             {
-                StatusMessage = "Error changing email.";
+                var errors = result.Errors.Select(x => "<p>" + x.Description + "</p>");
+				StatusMessage = "<h3>Error changing email.</h3>" + Environment.NewLine + string.Join(Environment.NewLine, errors);
                 return Page();
             }
-
-            // In our UI email and user name are one and the same, so when we update the email
-            // we need to update the user name.
-            var setUserNameResult = await _userManager.SetUserNameAsync(user, email);
-            if (!setUserNameResult.Succeeded)
+            if (IsValidEmail(user.UserName))
             {
-                StatusMessage = "Error changing user name.";
-                return Page();
+                //if the username is an email address, then we need to update it as well.
+                var setUserNameResult = await _userManager.SetUserNameAsync(user, email);
+                if (!setUserNameResult.Succeeded)
+                {
+					var errors = result.Errors.Select(x => "<p>" + x.Description + "</p>");
+					StatusMessage = "<h3>Error changing user name.</h3>" + Environment.NewLine + string.Join(Environment.NewLine, errors);
+					return Page();
+                }
             }
 
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Thank you for confirming your email change.";
             return Page();
         }
-    }
+
+		private bool IsValidEmail(string emailaddress)
+		{
+			try
+			{
+				MailAddress m = new MailAddress(emailaddress);
+				return true;
+			}
+			catch (FormatException)
+			{
+				return false;
+			}
+		}
+	}
 }

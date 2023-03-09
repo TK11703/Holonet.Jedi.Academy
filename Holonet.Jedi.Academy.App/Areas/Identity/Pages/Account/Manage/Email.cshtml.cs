@@ -21,10 +21,7 @@ namespace Holonet.Jedi.Academy.App.Areas.Identity.Pages.Account.Manage
         private readonly SignInManager<JediAcademyAppUser> _signInManager;
         private readonly AzCommSrvEmailSender _emailSender;
 
-        public EmailModel(
-            UserManager<JediAcademyAppUser> userManager,
-            SignInManager<JediAcademyAppUser> signInManager,
-			AzCommSrvEmailSender emailSender)
+        public EmailModel(UserManager<JediAcademyAppUser> userManager, SignInManager<JediAcademyAppUser> signInManager, AzCommSrvEmailSender emailSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -58,7 +55,7 @@ namespace Holonet.Jedi.Academy.App.Areas.Identity.Pages.Account.Manage
 
             Input = new InputModel
             {
-                NewEmail = email,
+                NewEmail = email
             };
 
             IsEmailConfirmed = await _userManager.IsEmailConfirmedAsync(user);
@@ -145,5 +142,6 @@ namespace Holonet.Jedi.Academy.App.Areas.Identity.Pages.Account.Manage
             StatusMessage = "Verification email sent. Please check your email.";
             return RedirectToPage();
         }
+
     }
 }
