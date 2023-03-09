@@ -89,7 +89,7 @@ void ConfigureServices(IServiceCollection services)
     services.AddDefaultIdentity<JediAcademyAppUser>(options => options.SignIn.RequireConfirmedAccount = true)
         .AddRoles<IdentityRole>().AddEntityFrameworkStores<JediAcademyAppUserContext>();
 	
-    services.AddTransient<IEmailSender, EmailSender>();
+    services.AddTransient<IEmailSender, AzCommSrvEmailSender>();
 	
     services.Configure<IdentityOptions>(options =>
     {

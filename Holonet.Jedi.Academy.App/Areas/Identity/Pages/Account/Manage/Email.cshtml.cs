@@ -19,12 +19,12 @@ namespace Holonet.Jedi.Academy.App.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<JediAcademyAppUser> _userManager;
         private readonly SignInManager<JediAcademyAppUser> _signInManager;
-        private readonly EmailSender _emailSender;
+        private readonly AzCommSrvEmailSender _emailSender;
 
         public EmailModel(
             UserManager<JediAcademyAppUser> userManager,
             SignInManager<JediAcademyAppUser> signInManager,
-            EmailSender emailSender)
+			AzCommSrvEmailSender emailSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;

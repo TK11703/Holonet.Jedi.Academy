@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace Holonet.Jedi.Academy.App.Middleware
 {
-	public class EmailSender : IEmailSender
+	public class SmtpEmailSender : IEmailSender
 	{
 		private readonly SiteConfiguration config;
-		private readonly ILogger<EmailSender> _logger;
+		private readonly ILogger<SmtpEmailSender> _logger;
 
-		public EmailSender(IOptions<SiteConfiguration> options, ILogger<EmailSender> logger)
+		public SmtpEmailSender(IOptions<SiteConfiguration> options, ILogger<SmtpEmailSender> logger)
 		{
 			config = options.Value;
 			_logger = logger;

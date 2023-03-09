@@ -15,9 +15,9 @@ namespace Holonet.Jedi.Academy.App.Areas.Identity.Pages.Account
     public class RegisterConfirmationModel : PageModel
     {
         private readonly UserManager<JediAcademyAppUser> _userManager;
-        private readonly EmailSender _sender;
+        private readonly AzCommSrvEmailSender _sender;
 
-        public RegisterConfirmationModel(UserManager<JediAcademyAppUser> userManager, EmailSender sender)
+        public RegisterConfirmationModel(UserManager<JediAcademyAppUser> userManager, AzCommSrvEmailSender sender)
         {
             _userManager = userManager;
             _sender = sender;

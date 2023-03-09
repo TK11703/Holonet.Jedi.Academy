@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+   <PackageReference Include="Azure.Communication.Email" Version="1.0.0-beta.2" />
    <PackageReference Include="FoolProof.Core" Version="1.1.35" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.11" />
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
