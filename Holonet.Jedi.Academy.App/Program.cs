@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Newtonsoft.Json.Serialization;
 using Microsoft.Extensions.DependencyInjection;
 using Holonet.Jedi.Academy.Entities.Configuration;
@@ -65,8 +64,9 @@ void ConfigureServices(IServiceCollection services)
     services.AddFoolProof();
 
     services.AddTransient<IRazorPartialToStringRenderer, RazorPartialToStringRenderer>();
+	services.AddTransient<AzCommSrvEmailSender>();
 
-    IMvcBuilder mvcBuilder = services.AddRazorPages(options =>
+	IMvcBuilder mvcBuilder = services.AddRazorPages(options =>
     {
 		options.Conventions.AllowAnonymousToFolder("/Identity/Account").AllowAnonymousToPage("/Errors/SessionExpired");
 		options.Conventions.AuthorizeFolder("/", "Student");		
@@ -88,8 +88,6 @@ void ConfigureServices(IServiceCollection services)
 
     services.AddDefaultIdentity<JediAcademyAppUser>(options => options.SignIn.RequireConfirmedAccount = true)
         .AddRoles<IdentityRole>().AddEntityFrameworkStores<JediAcademyAppUserContext>();
-	
-    services.AddTransient<IEmailSender, AzCommSrvEmailSender>();
 	
     services.Configure<IdentityOptions>(options =>
     {

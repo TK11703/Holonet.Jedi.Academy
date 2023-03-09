@@ -1,11 +1,6 @@
 ﻿using Azure.Communication.Email;
 using Holonet.Jedi.Academy.Entities.Configuration;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Options;
-using NuGet.Protocol.Plugins;
-using System.Net;
-using System.Net.Mail;
-using System.Threading.Tasks;
 
 namespace Holonet.Jedi.Academy.App.Middleware
 {
@@ -26,7 +21,6 @@ namespace Holonet.Jedi.Academy.App.Middleware
 				EmailClient emailClient = new EmailClient(config.AzCommSvcSettings.ConnectionString);
 				try
 				{
-					Console.WriteLine("Sending email...");
 					EmailSendOperation emailSendOperation = await emailClient.SendAsync(Azure.WaitUntil.Completed, config.AzCommSvcSettings.Sender, email, subject, htmlMessage);
 					EmailSendResult statusMonitor = emailSendOperation.Value;
 
@@ -48,6 +42,7 @@ namespace Holonet.Jedi.Academy.App.Middleware
 				catch (Exception ex)
 				{
 					Console.WriteLine($"Error in sending email, {ex}");
+					throw new Exception("Email settings were not detected.", ex);
 				}
 			}
 			else
