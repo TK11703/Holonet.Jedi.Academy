@@ -9,14 +9,12 @@ namespace Holonet.Jedi.Academy.App.Middleware
 	public class SmtpEmailSender : IEmailSender
 	{
 		private readonly SiteConfiguration config;
-		private readonly ILogger<SmtpEmailSender> _logger;
 
-		public SmtpEmailSender(IOptions<SiteConfiguration> options, ILogger<SmtpEmailSender> logger)
+		public SmtpEmailSender(SiteConfiguration siteConfig)
 		{
-			config = options.Value;
-			_logger = logger;
+			config = siteConfig;
 		}
-		public Task SendEmailAsync(string email, string subject, string htmlMessage)
+		public async Task SendEmailAsync(string email, string subject, string htmlMessage)
 		{
 			if (config.MailSettings != null)
 			{
@@ -34,7 +32,7 @@ namespace Holonet.Jedi.Academy.App.Middleware
 				}
 
 				MailMessage message = GenerateMailMessage(email, subject, htmlMessage);
-				return client.SendMailAsync(message);
+				await client.SendMailAsync(message);
 			}
 			else
 			{
@@ -42,7 +40,7 @@ namespace Holonet.Jedi.Academy.App.Middleware
 			}
 		}
 
-		public Task SendEmailAsync(List<string> emails, string subject, string htmlMessage)
+		public async Task SendEmailAsync(List<string> emails, string subject, string htmlMessage)
 		{
 			if (config.MailSettings != null)
 			{
@@ -60,7 +58,7 @@ namespace Holonet.Jedi.Academy.App.Middleware
 				}
 
 				MailMessage message = GenerateMailMessage(emails, subject, htmlMessage);
-				return client.SendMailAsync(message);
+				await client.SendMailAsync(message);
 			}
 			else
 			{
@@ -68,7 +66,7 @@ namespace Holonet.Jedi.Academy.App.Middleware
 			}
 		}
 
-		public Task SendEmailAsync(List<string> to, List<string> cc, List<string> bcc, string subject, string htmlMessage)
+		public async Task SendEmailAsync(List<string> to, List<string> cc, List<string> bcc, string subject, string htmlMessage)
 		{
 			if (config.MailSettings != null)
 			{
@@ -86,7 +84,7 @@ namespace Holonet.Jedi.Academy.App.Middleware
 				}
 
 				MailMessage message = GenerateMailMessage(to, cc, bcc, subject, htmlMessage);
-				return client.SendMailAsync(message);
+				await client.SendMailAsync(message);
 			}
 			else
 			{

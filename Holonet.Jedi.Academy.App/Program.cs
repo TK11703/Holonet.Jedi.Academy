@@ -64,7 +64,7 @@ void ConfigureServices(IServiceCollection services)
     services.AddFoolProof();
 
     services.AddTransient<IRazorPartialToStringRenderer, RazorPartialToStringRenderer>();
-	services.AddTransient<AzCommSrvEmailSender>();
+	services.AddTransient<CustomEmailer>();
 
 	IMvcBuilder mvcBuilder = services.AddRazorPages(options =>
     {

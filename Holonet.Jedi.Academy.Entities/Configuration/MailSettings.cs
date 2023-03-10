@@ -7,7 +7,8 @@ namespace Holonet.Jedi.Academy.Entities.Configuration
 {
     public class MailSettings
 	{
-        public string Host { get; set; } = string.Empty;
+		public bool Enabled { get; set; }
+		public string Host { get; set; } = string.Empty;
 		public int Port { get; set; }
 		public bool EnableSsl { get; set; }
 		public bool SendAsHtml { get; set; }

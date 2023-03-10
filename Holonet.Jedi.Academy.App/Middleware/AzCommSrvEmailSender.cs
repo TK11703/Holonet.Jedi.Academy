@@ -9,12 +9,10 @@ namespace Holonet.Jedi.Academy.App.Middleware
 	public class AzCommSrvEmailSender : IEmailSender
 	{
 		private readonly SiteConfiguration config;
-		private readonly ILogger<AzCommSrvEmailSender> _logger;
 
-		public AzCommSrvEmailSender(IOptions<SiteConfiguration> options, ILogger<AzCommSrvEmailSender> logger)
+		public AzCommSrvEmailSender(SiteConfiguration siteConfig)
 		{
-			config = options.Value;
-			_logger = logger;
+			config = siteConfig;
 		}
 		public async Task SendEmailAsync(string email, string subject, string htmlMessage)
 		{

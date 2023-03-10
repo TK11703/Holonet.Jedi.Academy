@@ -25,14 +25,14 @@ namespace Holonet.Jedi.Academy.App.Areas.Identity.Pages.Account
         private readonly UserManager<JediAcademyAppUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly ILogger<RegisterModel> _logger;
-        private readonly AzCommSrvEmailSender _emailSender;
+        private readonly CustomEmailer _emailSender;
 
         public RegisterModel(
             UserManager<JediAcademyAppUser> userManager,
             SignInManager<JediAcademyAppUser> signInManager,
             RoleManager<IdentityRole> roleManager,
             ILogger<RegisterModel> logger,
-			AzCommSrvEmailSender emailSender)
+			CustomEmailer emailSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;

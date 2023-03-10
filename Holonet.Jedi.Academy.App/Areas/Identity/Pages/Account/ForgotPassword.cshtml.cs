@@ -19,9 +19,9 @@ namespace Holonet.Jedi.Academy.App.Areas.Identity.Pages.Account
     public class ForgotPasswordModel : PageModel
     {
         private readonly UserManager<JediAcademyAppUser> _userManager;
-        private readonly AzCommSrvEmailSender _emailSender;
+        private readonly CustomEmailer _emailSender;
 
-        public ForgotPasswordModel(UserManager<JediAcademyAppUser> userManager, AzCommSrvEmailSender emailSender)
+        public ForgotPasswordModel(UserManager<JediAcademyAppUser> userManager, CustomEmailer emailSender)
         {
             _userManager = userManager;
             _emailSender = emailSender;
